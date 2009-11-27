@@ -1,0 +1,5 @@
+I think having them one by one (long, short, long, short, ...) makes more sense
+than having them in separate files. But I'm not sure I should follow this
+strategy when testing with color and with --porcelain as well. Maybe
+it's enough to duplicate a few tests only for --porcelain and with
+color?
