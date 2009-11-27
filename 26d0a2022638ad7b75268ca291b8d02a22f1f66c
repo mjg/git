@@ -1,0 +1,9 @@
+This is RFC for several reasons:
+
+* Should I rename wt-status.c's color() into something more unique when
+  I export it?
+* Is there any policy regarding use of putchar/puts vs. printf?
+* The way it is done now I "color" a space, otherwise one would need to
+  break down the print statements even more. Since we always color the
+  foreground only it is no problem, is it?
+* Even if I were to write tests for status -s: How do I test colors?
