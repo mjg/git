@@ -1,0 +1,5 @@
+I'm actually wondering about 17/17 as well.
+If commit is called with a file name then shouldn't it simply commit the
+current state of the file in the worktree, no matter what the index or
+skip-worktree say? I therefore think 17/17 should be expect_success
+and have no test_must_fail.
