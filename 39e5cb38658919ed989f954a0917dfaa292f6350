@@ -1,0 +1,9 @@
+v2 changes the wording to match with branch -d and uses the same
+for forcefully overwriting tags.
+
+Zoltán, I don't think we should make this into a race. Posting in
+the relevant thread (and actually following it) would help this.
+
+Also, I think we should really compare the sha1 the tag points to,
+i.e. like below and like in your v1 (not v2). Different tag object
+is different tag (message may differ, e.g.).
