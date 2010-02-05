@@ -1,0 +1,6 @@
+I'd actually suggest changing "and -n or -f not given" to "and neither -n nor -f given"
+in addition to the above, but the above is a real fix, whereas the latter is a style
+issue, and we're close to release.
+
+In fact, having a variable where unset means true is rather unfortunate,
+but I don't expect that to be changing.
