@@ -1,0 +1,4 @@
+Sparked by the recent discussion on uuid etc. I did a few (manual) checks.
+There seem to be 4 remaining "problematic" cases (Elrond, jidanni,
+Kirill, Twiinz) but 3 are unique, and I don't think we strictly require
+full names. Kirill may be one of several other Kirills.
