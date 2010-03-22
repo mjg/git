@@ -1,0 +1,2 @@
+I'm actually wondering why log and rev-list don't share the relevant
+part of that code.
