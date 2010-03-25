@@ -1,0 +1,15 @@
+This is RFC/RFD. An actual patch will also adjust several tests to
+the new expected output. Also, one might want to change init's default
+verbosity level accordingly.
+
+The current output is really confusing for local cloning. There are
+several alternative ways to resolve this:
+- Make the local cloning process report something.
+- Check whether the clone is remote or not and report init or don't.
+
+Currently, we really have two philosophies:
+- report only on error
+- be chatty on success
+
+I don't think that's a problem, but "simple" commands (e.g. branch, init,
+add) should be in the former camp.
