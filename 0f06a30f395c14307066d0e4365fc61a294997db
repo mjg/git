@@ -1,0 +1,6 @@
+This is actually inspired by Jeff's novel notes use. I think there are
+use cases where a notes log makes sense (notes on commits) and those
+where it does not (metadata/textconv). In both cases having a reflog is
+useful. So, the next step is really to allow notes trees without
+history, which also takes care of the pruning issue. I know how to do this,
+I just have to decide about the configuration options.
