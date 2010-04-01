@@ -1,0 +1,5 @@
+I checked the documentation, there is really no place where the output
+of git clone is documented - no documentation or test change is necesessary.
+
+I made it so that -v will restore the init message. Other than that this is really
+your path, Junio.
