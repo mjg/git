@@ -1,5 +1,4 @@
-I checked the documentation, there is really no place where the output
-of git clone is documented - no documentation or test change is necesessary.
+Basically this is your patch now, Junio, which is why it disappeared from my
+radar. But I don't think you applied it, so I'm resubmitting.
 
-I made it so that -v will restore the init message. Other than that this is really
-your path, Junio.
+v2 shuts up init unconditionally (even with -v), as you preferred.
