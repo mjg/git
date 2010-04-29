@@ -1,0 +1,11 @@
+RFD for several reasons:
+
+- It's incredibly useful, I want it - do others? ;)
+- names of the options (let the bikeshedding begin)
+- should rev-parse include HEAD?
+- tests and doc, of course
+
+rev-parse does not include HEAD even with --all, but rev-list does.
+The patch keeps with that tradition (the commit message does not quite
+convey this). I don't feel it's a good one. Cleaning that up
+requires more work, though.
