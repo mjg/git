@@ -1,8 +1,0 @@
-In fact, there are a few more places where seemingly a req_svn() is missing.
-But the call chains are very confusing. The one seemingly missing in prop_walk()
-would be covered by the recursive props test which succeeds, so the caller
-must have requested SVN::Core also. I believe this applies to the other places
-as well (but not to version()).
-
-Is there any harm done by inserting a superfluous req_svn() in these cases for
-good measure?
