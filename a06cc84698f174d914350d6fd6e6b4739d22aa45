@@ -1,0 +1,3 @@
+This does not fix the "filesystem boundary issue" I reported, but I spotted
+this when digging through read-cache.c. My device ids would have issues
+when int = short.
