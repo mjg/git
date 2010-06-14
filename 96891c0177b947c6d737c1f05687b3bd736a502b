@@ -1,0 +1,7 @@
+I'm not sure whether it's worth introducing pretty_ctx.show_source to
+keep track of the use of --source. commit->util is possibly used by
+other codepaths also. Even without this patch, --cherry-pick --source
+does not work (in the sense that there is an empty source output) because
+of this.
+
+RFC obviously also so that I don't have to write doc and tests just yet :)
