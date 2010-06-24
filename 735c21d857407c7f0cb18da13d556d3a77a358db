@@ -1,2 +1,1 @@
-This formulation is based on my understanding that you can't cat-file
---textconv something in the index or worktree.
+v2 based on clarification by Matthieu Moy.
