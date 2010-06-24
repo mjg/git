@@ -1,0 +1,2 @@
+This formulation is based on my understanding that you can't cat-file
+--textconv something in the index or worktree.
