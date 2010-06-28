@@ -2,5 +2,11 @@ This is on top of the ":path" patch to git-rev-parse.txt.
 
 I chose not to rewrap the paragraphs so that the diff is clearer,
 especially with --color-words.
-I don't know what the best patch workflow guideline is here. Maybe
-rewrapping a v2?
+
+v3 now has the quoting style consistent at least locally (and the caret
+spelled out), although the existing text changes style midway.
+
+This is about as far as I will go with a "minimal change" patch trying
+to alleviate the :something confusion. I really think the whole part
+needs an overhaul not only to make it consistent, so bikeshedding before
+that is pointless ;)
