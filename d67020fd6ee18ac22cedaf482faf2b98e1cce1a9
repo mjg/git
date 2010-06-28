@@ -1,0 +1,6 @@
+This is on top of the ":path" patch to git-rev-parse.txt.
+
+I chose not to rewrap the paragraphs so that the diff is clearer,
+especially with --color-words.
+I don't know what the best patch workflow guideline is here. Maybe
+rewrapping a v2?
