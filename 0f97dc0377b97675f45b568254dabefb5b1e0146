@@ -1,0 +1,6 @@
+I am probably making a complete shell fool out of myself by overlooking
+something completely trivial.
+
+But just in case I am not, this reduces the loop from O(N^2) to O(N), although
+I do admit that N is typically not that large...
+(Note that the inner $skp does not overwrite the outer one, at least not with bash.)
