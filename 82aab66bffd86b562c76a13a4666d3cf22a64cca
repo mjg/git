@@ -1,2 +1,6 @@
-We may want to better spell out the reasons, but I think
-it's good enough like this for *explicitly* skipped tests.
+v2 has a typo fix in the commit message and the spelling of "skip"
+as suggested by AAB.
+
+I think I've read it differently in the RFC, but then I was also confused about
+the "#" in the RFC, and following the "reference" implementation (as per AAB)
+should be the best approach.
