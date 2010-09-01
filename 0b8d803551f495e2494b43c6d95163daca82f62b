@@ -1,0 +1,2 @@
+This does not help with the man page for git-remote-helpers which is installed
+but not found by git-help either. That is a different issue, though.
