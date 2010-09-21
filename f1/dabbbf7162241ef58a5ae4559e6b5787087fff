@@ -1,0 +1,2 @@
+Is this considered useful? RFC because of lack of doc and test.
+I consider it easier than (and different from) --match in some cases.
