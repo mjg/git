@@ -1952,29 +1952,37 @@ $(XDIFF_LIB): $(XDIFF_OBJS)
 $(VCSSVN_LIB): $(VCSSVN_OBJS)
 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(VCSSVN_OBJS)
 
+#H# Build man pages and HTML docs
 doc:
 	$(MAKE) -C Documentation all
 
+#H# Build man pages
 man:
 	$(MAKE) -C Documentation man
 
+#H# Build HTML doc
 html:
 	$(MAKE) -C Documentation html
 
+#H# Build info docs
 info:
 	$(MAKE) -C Documentation info
 
+#H# Build PDF docs
 pdf:
 	$(MAKE) -C Documentation pdf
 
+#H# Generate tags using etags
 TAGS:
 	$(RM) TAGS
 	$(FIND) . -name '*.[hcS]' -print | xargs etags -a
 
+#H# Generate tags using ctags
 tags:
 	$(RM) tags
 	$(FIND) . -name '*.[hcS]' -print | xargs ctags -a
 
+#H# Generate cscope index
 cscope:
 	$(RM) cscope*
 	$(FIND) . -name '*.[hcS]' -print | xargs cscope -b
@@ -2040,6 +2048,7 @@ export NO_SVN_TESTS
 
 ### Testing rules
 
+#H# Check the build by running the test suite
 test: all
 	$(MAKE) -C t/ all
 
@@ -2099,6 +2108,7 @@ export gitexec_instdir
 
 install_bindir_programs := $(patsubst %,%$X,$(BINDIR_PROGRAMS_NEED_X)) $(BINDIR_PROGRAMS_NO_X)
 
+#H# Install the git suite
 install: all
 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
@@ -2155,27 +2165,35 @@ endif
 install-gitweb:
 	$(MAKE) -C gitweb install
 
+#H# Install man pages
 install-doc:
 	$(MAKE) -C Documentation install
 
+#H# Install man pages
 install-man:
 	$(MAKE) -C Documentation install-man
 
+#H# Install HTML docs
 install-html:
 	$(MAKE) -C Documentation install-html
 
+#H# Install info docs
 install-info:
 	$(MAKE) -C Documentation install-info
 
+#H# Install PDF docs
 install-pdf:
 	$(MAKE) -C Documentation install-pdf
 
+#H# Install pregenerated man pages from origin/man
 quick-install-doc:
 	$(MAKE) -C Documentation quick-install
 
+#H# Install pregenerated man pages from origin/man
 quick-install-man:
 	$(MAKE) -C Documentation quick-install-man
 
+#H# Install pregenerated HTML pages from origin/html
 quick-install-html:
 	$(MAKE) -C Documentation quick-install-html
 
@@ -2188,6 +2206,7 @@ git.spec: git.spec.in
 	mv $@+ $@
 
 GIT_TARNAME=git-$(GIT_VERSION)
+#H# Build git-$(GIT_VERSION).tar.gz source
 dist: git.spec git-archive$(X) configure
 	./git-archive --format=tar \
 		--prefix=$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar
@@ -2203,6 +2222,7 @@ dist: git.spec git-archive$(X) configure
 	@$(RM) -r $(GIT_TARNAME)
 	gzip -f -9 $(GIT_TARNAME).tar
 
+#H# Build source and binary RPM packages
 rpm: dist
 	$(RPMBUILD) \
 		--define "_source_filedigest_algorithm md5" \
@@ -2211,6 +2231,8 @@ rpm: dist
 
 htmldocs = git-htmldocs-$(GIT_VERSION)
 manpages = git-manpages-$(GIT_VERSION)
+
+#H# Build $(manpages).tar.gz and $(htmldocs).tar.gz
 dist-doc:
 	$(RM) -r .doc-tmp-dir
 	mkdir .doc-tmp-dir
@@ -2230,10 +2252,11 @@ dist-doc:
 	$(RM) -r .doc-tmp-dir
 
 ### Cleaning rules
-
+#H# Remove generated files and the configure script
 distclean: clean
 	$(RM) configure
 
+#H# Remove generated files but keep the configure script
 clean:
 	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o vcs-svn/*.o \
 		builtin/*.o $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
@@ -2268,7 +2291,7 @@ endif
 .PHONY: FORCE TAGS tags cscope
 
 ### Check documentation
-#
+#H# Check documentation coverage
 check-docs::
 	@(for v in $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git gitk; \
 	do \
@@ -2335,6 +2358,7 @@ check-builtins::
 #
 .PHONY: coverage coverage-clean coverage-build coverage-report
 
+#H# Check test coverage
 coverage:
 	$(MAKE) coverage-build
 	$(MAKE) coverage-report
@@ -2370,5 +2394,15 @@ coverage-untested-functions: coverage-report
 cover_db: coverage-report
 	gcov2perl -db cover_db *.gcov
 
+#H# Check test coverage and create HTMl report
 cover_db_html: cover_db
 	cover -report html -outputdir cover_db_html cover_db
+
+#H# Show help for main make targets
+help:
+	@sed -n  -e '/^#H#/ {N'\
+		-e 's/^#H# \(.*\)\n\([a-z0-9_-]*\):.*/\2 \1/p'\
+		-e '}' <Makefile | sort --key=2 | while read target txt;\
+	do \
+		printf "%-20s: %s\n" "$$target" "$$txt"; \
+	done
