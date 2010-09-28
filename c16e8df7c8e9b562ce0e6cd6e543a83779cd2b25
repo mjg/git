@@ -1,3 +1,31 @@
 How's this for a version without maintenance issues?
 We could sort differently, of course, or at a category key (build, doc, etc.)
-but let's not go too far.
+but let's not go too far. Currently, the output of make help is:
+
+GIT_VERSION = 1.7.3.99.gc16e8
+dist                : Build git-$(GIT_VERSION).tar.gz source
+html                : Build HTML doc
+info                : Build info docs
+man                 : Build man pages
+doc                 : Build man pages and HTML docs
+dist-doc            : Build $(manpages).tar.gz and $(htmldocs).tar.gz
+pdf                 : Build PDF docs
+rpm                 : Build source and binary RPM packages
+check-docs          : Check documentation coverage
+coverage            : Check test coverage
+cover_db_html       : Check test coverage and create HTMl report
+test                : Check the build by running the test suite
+cscope              : Generate cscope index
+tags                : Generate tags using ctags
+install-html        : Install HTML docs
+install-info        : Install info docs
+install-doc         : Install man pages
+install-man         : Install man pages
+install-pdf         : Install PDF docs
+quick-install-html  : Install pregenerated HTML pages from origin/html
+quick-install-doc   : Install pregenerated man pages from origin/man
+quick-install-man   : Install pregenerated man pages from origin/man
+install             : Install the git suite
+distclean           : Remove generated files and the configure script
+clean               : Remove generated files but keep the configure script
+help                : Show help for main make targets
