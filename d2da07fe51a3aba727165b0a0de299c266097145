@@ -1,36 +1,5 @@
-Now how's this for portability and such? New output:
+Does it seem as if I can't let this go?
 
-Build targets:
-    all:                Build the Git suite
-    dist:               Build git-$(GIT_VERSION).tar.gz source
-    dist-doc:           Build $(manpages).tar.gz and $(htmldocs).tar.gz
-    doc:                Build man pages and HTML docs
-    html:               Build HTML doc
-    info:               Build info docs
-    man:                Build man pages
-    pdf:                Build PDF docs
-    rpm:                Build source and binary RPM packages
-Clean targets:
-    clean:              Remove generated files but keep the configure script
-    distclean:          Remove generated files and the configure script
-Develop targets:
-    cscope:             Generate cscope index
-    tags:               Generate tags using ctags
-    TAGS:               Generate tags using etags
-Help targets:
-    help:               Show help for main make targets
-Install targets:
-    install-doc:        Install man pages
-    install-html:       Install HTML docs
-    install-info:       Install info docs
-    install:            Install the Git suite
-    install-man:        Install man pages
-    install-pdf:        Install PDF docs
-    quick-install-doc:  Install pregenerated man pages from origin/man
-    quick-install-html: Install pregenerated HTML pages from origin/html
-    quick-install-man:  Install pregenerated man pages from origin/man
-Test targets:
-    check-docs:         Check documentation coverage
-    coverage:           Check test coverage
-    cover_db_html:      Check test coverage and create HTML report
-    test:               Check the build by running the test suite
+Anyhow, here's a make based variant which is a bit more chatty in the Makefile
+itself but has a ton of advantages, such as make variable expansion. Making
+good use of this for the install targets is left for another patch.
