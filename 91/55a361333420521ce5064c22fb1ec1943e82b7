@@ -1,0 +1,10 @@
+This is heavily WIP/RFC for the obvious reasons, but also these:
+
+Currently, multiple --parent options are ORed. I'm still unsure whether that or ANDing
+is more useful. ANDing can always be done cheaply by rev-listing with one
+--parent and then checking the result commits. ORing, otoh can be achieved only
+by doing multiple rev-list runs (unless it is implemented as it is, of course)..
+
+As a consequence (of the decision for ORing), I don't limit automatically by
+^<commit>. I should probably do that automatically for the single --parent
+option case, it's a huge speed-up.
