@@ -1,0 +1,5 @@
+This does not help with people running autoconf themselves, of course.
+But we keep answering questions about failed configure attempts.
+
+On an annecdotical note: When I decided to switch to a dvcs, I failed building
+Git (with configure) and tried out hg instead. Imagine!
