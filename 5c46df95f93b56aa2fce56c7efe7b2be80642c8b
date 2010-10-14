@@ -1,1 +1,14 @@
-RFC also because of lack of doc.
+RFC also because of lack of doc, and:
+
+Currently, one can do
+
+make -C t t6010-merge-base.sh
+
+or even
+
+make -C t t601*
+
+which is cool but undocumented. If we want this with prove it requires more
+effort, or shoving prove into the $(T) target rule which is doable, of course.
+I'm just wondering whether it's accepted to introduce a specific rule for prove
+at all.
