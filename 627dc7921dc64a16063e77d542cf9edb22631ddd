@@ -1,0 +1,4 @@
+65f3a9e (Remove all logic from get_git_work_tree(), 2010-11-01) breaks this test,
+which is why I am adding it.
+
+In fact, we don't really have tests for alias expansion at all, but that's a different issue.
