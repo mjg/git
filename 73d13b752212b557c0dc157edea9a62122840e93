@@ -1,0 +1,4 @@
+We still have a lingering inconsistency for denoting code fragments.
+Single backticks merely are a literal monospaced environment; html outputcolors
+this, nroff does not indicate it at all. I'm staying consistent with the
+surrounding text here.
