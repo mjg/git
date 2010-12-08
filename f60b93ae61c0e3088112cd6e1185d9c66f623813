@@ -1,0 +1,10 @@
+This does not work yet! Work In Progress/Request For Help
+
+"git log -p -m --first-parent" does exactly what I want to achieve,
+since the parent rewriting done by "--first-parent" makes "-p -m" output
+the diff to the first parent only.
+
+The attached patch teaches format-patch not to ignore merges (on
+"--first-parent"), but I failed to track how "diff-tree" sets options
+based on "-m" and how to do that for "format-patch". I am sure someone
+here can help me!
