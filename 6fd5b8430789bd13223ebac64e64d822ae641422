@@ -1,0 +1,4 @@
+While we don't need to match the underlines to the header's length, it
+looks nicer. So v2 incorporates this and the other changes:
+- untar is not a command on proper OSs
+- rsync is not a complete command line (implicit style guide...)
