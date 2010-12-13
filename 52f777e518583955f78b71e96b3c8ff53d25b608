@@ -1,0 +1,4 @@
+On a related note to J6t's patch, how's the stance on unique titles?
+Unique numbers are important for partial test runs, of course,
+but unique titles help finding you way through the test.
+There are more than the blame.sh ones.
