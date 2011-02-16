@@ -15,4 +15,4 @@ flexibility.
 - I don't like the name "--cherry-pick" for an option which is like "git
 cherry" and unlike "git cherry-pick".
 
-- We could till activate this mode as soon as one A..B range apears.
+- We could still activate this mode as soon as one A..B range apears.
