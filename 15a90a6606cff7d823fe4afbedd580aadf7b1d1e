@@ -1,5 +1,3 @@
-RFC for lack of doc and tests, and also:
-
 I first considered "--cherry-pick A..B" to automatically invoke this mode.
 Here are a few reasons why I didn't:
 
