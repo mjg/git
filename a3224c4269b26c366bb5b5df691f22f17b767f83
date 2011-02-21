@@ -1,16 +1,9 @@
-I first considered "--cherry-pick A..B" to automatically invoke this mode.
-Here are a few reasons why I didn't:
+v2 does it the --left/right-only way, which I hope is the right way :)
 
-- I haven't found a better way to propagate "we have a fake symmetric
-range" from handle_revision_arg() to cherry_pick_list(). Flags like
-SHOWN or TMP_MARK are reset somewhere in between! A global wouldn't do a
-better (more fine grained) job than the rev flag.
+Those new limiters work together with --left-right, --cherry-pick etc.
 
-- In the case of multiple revision args, it's probably less confusing to
-have one overall mode (think "--cherry-pick A...B C..D") than the added
-flexibility.
-
-- I don't like the name "--cherry-pick" for an option which is like "git
-cherry" and unlike "git cherry-pick".
-
-- We could still activate this mode as soon as one A..B range apears.
+It could be followed up by introducing --cherry as equivalent to
+--cherry-pick --right-only --ignore-merges
+and optionally making this work for A..B, or making "--cherry-pick A..B"
+invoke "--cherry-pick --right-only A...B" which would make a lot of sense
+but also change existing behavior.
