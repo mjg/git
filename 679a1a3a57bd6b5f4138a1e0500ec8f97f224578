@@ -1,0 +1,4 @@
+This is on top of mg/rev-list-one-side-only in pu.
+
+I guess that's it for now, before the great git-cherry and
+git-format-patch simplification ;)
