@@ -1,0 +1,3 @@
+It would be nice to mark all buffers but one with -R in mergemode
+but that seems to require some vim-scripting. There are no per-file command
+line options that I know of.
