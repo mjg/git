@@ -1,0 +1,6 @@
+This is the first part of the grand add/commit unification.
+It makes the use of -u,-a,-A and the long names uniform across
+add and commit, breaking only "commit --all" (by renaming it).
+
+It comes before Jeff's series from p^3u which refactors add/commit and
+implements "commit -A".
