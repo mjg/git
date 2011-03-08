@@ -1,0 +1,33 @@
+--left/right-only and --cherry-mark
+
+This is a replacement for mg/rev-list-one-side-only in pu.
+The --left/right-only related commits (1-4/9) are unchanged.
+
+5/9 is new and refactors the generation of commit marks (<>-) which we
+currently do in 5 places, to ease maintenance and extensibility.
+
+6,7 are new and introduce "--cherry-mark" to the revision walker which marks
+those commits which "--cherry-pick" would omit.
+
+8,9 are amended as compared to pu, introducing "--cherry" as a shortcut for
+"--cherry-mark --right-only --no-merges" to produce output much like "git
+cherry" with the full flexibility of rev-list/log. (We could use the previous
+version instead, or with a different synonym; or introduce rev-list-option
+aliases...)
+
+The mark for patch-equivalent commits is '=' because git-cherry's '-' is used
+for boundary commits already.
+
+The mark for non-equivalent commits is '+' (following git-cherry), or '<'/'>'
+with --left-right, or '*' with --graph.
+
+This is up for bike-shed^W^Wdiscussing - we could use ' ' instead or even '*'
+also without --graph, or '+' even with --graph.
+
+I would in fact prefer ' ' without --graph and '*' with --graph, which would
+make it even more different from git-cherry's output, though.
+(Personally, I never liked git-cherry's output anyways.)
+
+This is also the base for refactoring git-format-patch and git-cherry, of
+course, where the latter would be helped if it's ok to change the output
+format.
