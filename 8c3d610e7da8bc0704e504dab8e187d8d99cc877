@@ -1,6 +1,0 @@
-v2 takes "all-tracked" as the long form of "-a" for add and commit.
-
-I would think that "changes from all tracked files" would include the special
-change "deletion", but I'm open to making the description more verbous.
-But as a general rule, "git cmd -h" output should serve as a reminder,
-distinguishing the options from each other, not as complete description.
