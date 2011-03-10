@@ -1,33 +1,65 @@
 --left/right-only and --cherry-mark
 
-This is a replacement for mg/rev-list-one-side-only in pu.
-The --left/right-only related commits (1-4/9) are unchanged.
+Anyway, this is what it looks like with "Y" (even though I prefer "X"
+because of the option to flag correspondence.
 
-5/9 is new and refactors the generation of commit marks (<>-) which we
-currently do in 5 places, to ease maintenance and extensibility.
+v3 is v2 plus what we have discussed (pu had v2 plus Junio's amends).
+In addition, 6 and 9 use "Y" rather than "X".
 
-6,7 are new and introduce "--cherry-mark" to the revision walker which marks
-those commits which "--cherry-pick" would omit.
+To make it less boring, I added 10 which changes the output format with
+commit marks. See an example there and below. (10 is independent of the
+choice of X vs. Y, of course.)
 
-8,9 are amended as compared to pu, introducing "--cherry" as a shortcut for
-"--cherry-mark --right-only --no-merges" to produce output much like "git
-cherry" with the full flexibility of rev-list/log. (We could use the previous
-version instead, or with a different synonym; or introduce rev-list-option
-aliases...)
+All together, this gives output (from my branch) like:
 
-The mark for patch-equivalent commits is '=' because git-cherry's '-' is used
-for boundary commits already.
+git-log --oneline --cherry origin/pu...
 
-The mark for non-equivalent commits is '+' (following git-cherry), or '<'/'>'
-with --left-right, or '*' with --graph.
++ dfe27d4 git-log: put space after commit mark
+= ca14e3f t6007: test rev-list --cherry
++ e5a72f0 log --cherry: a synonym
+= fd5b652 rev-list: documentation and test for --cherry-mark
++ c17a824 revision.c: introduce --cherry-mark
+= 3d5377a rev-list/log: factor out revision mark generation
 
-This is up for bike-shed^W^Wdiscussing - we could use ' ' instead or even '*'
-also without --graph, or '+' even with --graph.
+git-log --oneline --graph --cherry origin/pu...
 
-I would in fact prefer ' ' without --graph and '*' with --graph, which would
-make it even more different from git-cherry's output, though.
-(Personally, I never liked git-cherry's output anyways.)
+* dfe27d4 git-log: put space after commit mark
+= ca14e3f t6007: test rev-list --cherry
+* e5a72f0 log --cherry: a synonym
+= fd5b652 rev-list: documentation and test for --cherry-mark
+* c17a824 revision.c: introduce --cherry-mark
+= 3d5377a rev-list/log: factor out revision mark generation
 
-This is also the base for refactoring git-format-patch and git-cherry, of
-course, where the latter would be helped if it's ok to change the output
-format.
+git-log --oneline --graph --cherry-mark origin/pu...
+
+* dfe27d4 git-log: put space after commit mark
+= ca14e3f t6007: test rev-list --cherry
+* e5a72f0 log --cherry: a synonym
+= fd5b652 rev-list: documentation and test for --cherry-mark
+* c17a824 revision.c: introduce --cherry-mark
+= 3d5377a rev-list/log: factor out revision mark generation
+*   0cb35e5 Merge branch 'mm/maint-log-n-with-diff-filtering' into pu
+|\
+| * 251df09 log: fix --max-count when used together with -S or -G
+* |   803ba88 Merge branch 'jk/edit-notes-in-commit-log' into pu
+...
+|  / / / / / / / / / /
+* | | | | | | | | | |   f1b3ae0 Merge branch 'mg/rev-list-one-side-only' into pu
+|\ \ \ \ \ \ \ \ \ \ \
+| = | | | | | | | | | | fe3b59e t6007: test rev-list --cherry
+| * | | | | | | | | | | 94f605e log --cherry: a synonym
+| = | | | | | | | | | | cb56e30 rev-list: documentation and test for --cherry-mark
+| * | | | | | | | | | | adbbb31 revision.c: introduce --cherry-mark
+| = | | | | | | | | | | 1df2d65 rev-list/log: factor out revision mark generation
+
+And all this in beautiful color (and full log interface), of course! Compare with:
+
+git cherry origin/pu -v
+- 3d5377ae86c22a73bdce7896abe2953019039e0e rev-list/log: factor out revision mark generation
++ c17a82478307a5a29455de09232087b17435c52a revision.c: introduce --cherry-mark
+- fd5b65227573cb8d5ff7c8087814f9b8f8e0851e rev-list: documentation and test for --cherry-mark
++ e5a72f0ddc0ddc9b6087c08143b188043f3bea1f log --cherry: a synonym
+- ca14e3fb22b91653086fbd8c8600f2f93409a0a6 t6007: test rev-list --cherry
++ dfe27d480258ab4af4fa50628a9bbaff33ba6860 git-log: put space after commit mark
+
+Let the bike-shedding begin!
