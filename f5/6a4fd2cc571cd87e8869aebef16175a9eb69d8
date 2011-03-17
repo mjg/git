@@ -1,0 +1,5 @@
+revision.c: --merges, --no-merges and --merges-only
+
+This mini series makes it so that --no-merges undoes --merges
+and vice versa, as the user should be able to expect,
+and that --merges-only is a separate option.
