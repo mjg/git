@@ -5,6 +5,6 @@ documentation and tests, and it even comes with boiler plate. It should
 make all of Jeff's and Junio's dreams come true (as far as revision
 limiting by parent number goes).
 
-1/3 introduced the new options (and has a proper commit message)
+1/3 introduces the new options (and has a proper commit message)
 2/3 I noted along the way and could be applied earlier
 3/3 depends on 1 and 2 and is the candy (doc, tests, completion)
