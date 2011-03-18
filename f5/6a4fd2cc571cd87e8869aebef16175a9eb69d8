@@ -1,5 +1,10 @@
-revision.c: --merges, --no-merges and --merges-only
+rev-list and friends: --min-parents, --max-parents
 
-This mini series makes it so that --no-merges undoes --merges
-and vice versa, as the user should be able to expect,
-and that --merges-only is a separate option.
+As opposed to the RFD it replaces, this is a real patch series with
+documentation and tests, and it even comes with boiler plate. It should
+make all of Jeff's and Junio's dreams come true (as far as revision
+limiting by parent number goes).
+
+1/3 introduced the new options (and has a proper commit message)
+2/3 I noted along the way and could be applied earlier
+3/3 depends on 1 and 2 and is the candy (doc, tests, completion)
