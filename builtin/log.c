@@ -1381,7 +1381,10 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
 	struct patch_ids ids;
 	struct commit *commit;
 	struct commit_list *list = NULL;
+	struct commit *upstream_commit, *head_commit;
+	struct commit_list *exclude = NULL;
 	struct branch *current_branch;
+	unsigned char sha1[20];
 	const char *upstream;
 	const char *head = "HEAD";
 	const char *limit = NULL;
@@ -1425,10 +1428,17 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
 	revs.ignore_merges = 1;
 	DIFF_OPT_SET(&revs.diffopt, RECURSIVE);
 
-	if (add_pending_commit(head, &revs, 0))
+	if (get_sha1(head, sha1) || !(head_commit = lookup_commit_reference(sha1)))
 		die("Unknown commit %s", head);
-	if (add_pending_commit(upstream, &revs, UNINTERESTING))
+	if (get_sha1(upstream, sha1) || !(upstream_commit = lookup_commit_reference(sha1)))
 		die("Unknown commit %s", upstream);
+	exclude = get_merge_bases(upstream_commit, head_commit, 1);
+	add_pending_commit_list(revs, exclude, UNINTERESTING);
+	free_commit_list(exclude);
+
+	upstream_commit->object.flags |= SYMMETRIC_LEFT;
+	add_pending_object(revs, &head_commit->object, head);
+	add_pending_object(revs, &upstream_commit->object, upstream);
 
 	/* Don't say anything if head and upstream are the same. */
 	if (revs.pending.nr == 2) {
@@ -1436,8 +1446,6 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
 		if (hashcmp(o[0].item->sha1, o[1].item->sha1) == 0)
 			return 0;
 	}
-
-	get_patch_ids(&revs, &ids, prefix);
 
 	if (limit && add_pending_commit(limit, &revs, UNINTERESTING))
 		die("Unknown commit %s", limit);
@@ -1463,6 +1471,5 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
 		list = list->next;
 	}
 
-	free_patch_ids(&ids);
 	return 0;
 }
