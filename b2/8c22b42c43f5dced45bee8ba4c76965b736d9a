@@ -1,0 +1,5 @@
+So I think this would be a proper fix.
+
+I tried to be nice and base it on the commit which I bisected the problem to. I
+saw much too late that their were later (failed) attempts at fixing this and a
+major rewrite of the test, which is quite a nuisance. Anyway, this problem needs a fix.
