@@ -1,3 +1,5 @@
+reflog, show and command line overrides
+
 While thinking about how to redo 3/3 (show.c do not prune by pathspec) I
 noticed a somehow related reflog problem, which overrides some command line
 options.
