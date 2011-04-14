@@ -1,0 +1,3 @@
+I don't think we can safeguard prune itself properly. A filesystem may be out
+of time sync sporadically (and produce incorrect time stamps) but then be in
+sync when "git prune" is run so that we can't detect it.
