@@ -1,0 +1,6 @@
+So, just so that I don't get the vapor patch award, here's a WIP passing
+Jeff's test.
+
+Before looking at free()ing what I've introduced and the binary issue I'll
+check whether the whole blob/file read hunk in show_patch_diff() can't be
+simply subsumed in the fill_textconv() call.
