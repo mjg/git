@@ -1,3 +1,3 @@
 I noticed this in passing. It does not break anything and can be done
-easily. I would feel strongly positive about it if rev-list --cherry
-was faster. Then it would be useful for gitprompt, branch -vv and the like.
+easily. It might even be useful for gitprompt, branch -vv and the like,
+depending on how fast  we can make git rev-list --cherry.
