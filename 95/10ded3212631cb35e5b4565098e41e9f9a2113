@@ -14,6 +14,8 @@ It makes more sense to have '-v' display cheap output (upstream name)
 and '-vv' add expensive output (ahead/behind info). '-vvv' could add super
 expensive info (ahead/equivalent/behind a la cherry-mark).
 
-But all of the above are changes to current (ui) behaviour.
+But all of the above are changes to current (ui) behaviour. In the two patches
+below, only the automatic activation of the list mode with -v/-vv is a
+change of (undocumented) behaviour.
 
 And yes, git-for-each-ref can do all this and more, but that is plumbing.
