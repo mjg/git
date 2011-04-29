@@ -1,0 +1,6 @@
+I would even consider a default of 10 (i.e. show a 20 line stat in full,
+abbreviate larger ones) to be sensible but have refrained from such a
+behaviour change.
+
+We have hardcoded defaults for width (80) and name-width (50), so having
+one for lines should be okay also.
