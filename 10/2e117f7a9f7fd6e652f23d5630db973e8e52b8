@@ -2,11 +2,11 @@ I would even consider a default of 20 to be sensible but have refrained from
 such a behaviour change.
 
 We have hardcoded defaults for width (80) and name-width (50), but - as Junio
-points out - typical terminalsi are horizontally limitted, not vertically.
+points out - typical terminals are horizontally limited, not vertically.
 
-v2 used the name "count" as suggested by Junio and limits to the first <count>
+v2 uses the name "count" as suggested by Junio and limits to the first <count>
 lines/items.
 
-In the case with count+1 items one may argue whether it makes more sense to
-ignore the user wish and output all count+1 lines, or count lines (as
+In the case with <count>+1 items one may argue whether it makes more sense to
+ignore the user wish and output all <count>+1 lines, or <count> lines (as
 requested) plus the "..." line.
