@@ -10,3 +10,6 @@ lines/items.
 In the case with <count>+1 items one may argue whether it makes more sense to
 ignore the user wish and output all <count>+1 lines, or <count> lines (as
 requested) plus the "..." line.
+
+(I saw the suggestion about N-2...2 just now. Would work also, but I guess
+we would do this in more cases then, as Junio indicated.)
