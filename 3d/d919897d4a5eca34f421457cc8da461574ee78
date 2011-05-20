@@ -4,6 +4,4 @@ because of the pipes.
 
 Patch directly on top of b1b4755. Thanks for the report!
 
-The fix replaces a group "(- )?" by "-? ?" which works in this
-case (though not being equivalent). It's easier than dealing
-with the problem the grouping introduced.
+v2 uses the grouped regexp again. I've learned to count to 2 meanwhile.
