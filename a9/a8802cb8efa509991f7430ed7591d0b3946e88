@@ -1,0 +1,5 @@
+git svn scares me. It exits with 0 even with these problems!
+Consequently, the tests in t9116 completely ignore the return codes
+because of the pipes.
+
+Patch directly on top of b1b4755. Thanks for the report!
