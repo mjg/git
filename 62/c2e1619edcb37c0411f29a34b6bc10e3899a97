@@ -1,0 +1,1 @@
+Why is it that even with LANG=C exported, gcc gives localized warnings?
