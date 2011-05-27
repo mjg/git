@@ -1,0 +1,2 @@
+This optimizes (tightens) the display potentially, but we never had tests
+which are sensitive to that.
