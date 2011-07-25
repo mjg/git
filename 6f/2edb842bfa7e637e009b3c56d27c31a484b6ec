@@ -1,0 +1,2 @@
+RFC because lack of test, and also because I'm not sure we want this, and
+what to do about git add which has the same problem.
