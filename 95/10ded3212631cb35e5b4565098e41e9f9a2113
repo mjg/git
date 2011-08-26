@@ -16,4 +16,7 @@ Also, the independent test for "-vv" is put first (which certainly can go in
 now).  Next come long option names for "git tag" and "git branch", then the
 pattern related patches.
 
+I have also rebased on next with nk/branch-v-abbrev (which conflicts, though
+"trivially").
+
 "-l -> -g" migration for "git branch" and such are issues for a later series.
