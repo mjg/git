@@ -1,22 +1,6 @@
 patterns for branch list
 
-In this iteration, I have incorporated Jeffs and Junios suggestions and Junios
-patches. Thanks!
+v3 has reworded commit messages for 2 and 3 and tests for combinations
+of branch options, as suggested.
 
-So:
-
-git branch --list is introduced before the patterns (though it is not needed at
-that point)
-
-Multiple patterns are allowed.
-
-The -v/vv/vvv changing patches are gone.
-
-Also, the independent test for "-vv" is put first (which certainly can go in
-now).  Next come long option names for "git tag" and "git branch", then the
-pattern related patches.
-
-I have also rebased on next with nk/branch-v-abbrev (which conflicts, though
-"trivially").
-
-"-l -> -g" migration for "git branch" and such are issues for a later series.
+No code changes (besides the additional tests in 3).
