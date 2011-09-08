@@ -1,5 +1,5 @@
 mg/branch-list amendment
 
 So, this is what the top 2 commits in mg/branch-list should be replaced
-with if we don't let "-v" avtivate list mode, so that we can have a verbose
+with if we don't let "-v" activate list mode, so that we can have a verbose
 option to other modes later on.
