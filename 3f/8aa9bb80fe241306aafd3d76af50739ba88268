@@ -1,0 +1,6 @@
+Virtual refname objects
+
+For each existing refname, introduce virtual objects corresponding to a blob
+with the refname as the content. "virtual" refers to the fact that these
+objects are not written out but exist for all other purposes, such as
+attaching notes and keeping them from being pruned.
