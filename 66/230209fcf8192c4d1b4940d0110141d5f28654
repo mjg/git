@@ -1,3 +1,4 @@
 Cover letter from notes
 
-Fill in the cover letter from a note to ref:HEAD
+Fill in the cover letter from a note to ref:HEAD if --notes is given.
+TODO: The current branch may not be the one the format-patch arguments refer to.
