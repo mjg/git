@@ -1,0 +1,3 @@
+Annotations for branches and tags
+
+Show notes for branches and tags when "branch" resp. "tag" is called with "--notes".
