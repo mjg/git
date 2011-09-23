@@ -1,2 +1,0 @@
-The idea is to use the same name as in "git notes --ref=<ref>" but make
-it clear for the rev-list option to be about notes, thus "--notes-ref=<ref>".

@@ -1,5 +1,0 @@
-This is super useful for me but I dunno whether it should live in contrib/
-(or a subdir thereof).
-
-Also, it is not that polished. I'd be happy to put it somewhere else if that's
-more appropriate. (Noting again that we miss make install contrib/feature.)
