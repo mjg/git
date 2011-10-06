@@ -1,0 +1,5 @@
+While this passes all tests and fixes the described problem, I don't
+know about any side effects. Also, I always feel a bit insecure about
+simply dropping pointers to allocated memory (remote->url[0]). Should
+I free() it? Neither remote-helpers nor memory management are exactly
+homeground for me...
