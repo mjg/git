@@ -108,7 +108,7 @@ pre-merge
 
 This hook is invoked by 'git merge' when doing an automatic merge
 commit; it is equivalent to 'pre-commit' for a non-automatic commit
-for a merge.
+for a merge, and can be bypassed with the `--no-verify` option. 
 
 prepare-commit-msg
 ~~~~~~~~~~~~~~~~~~
