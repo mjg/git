@@ -1,14 +1,35 @@
 #!/bin/sh
 
-test_description='pre-commit hook'
+test_description='pre-commit and pre-merge hooks'
 
 . ./test-lib.sh
+
+test_expect_success 'root commit' '
+
+	echo "root" > file &&
+	git add file &&
+	git commit -m "zeroth" &&
+	git checkout -b side &&
+	echo "foo" > foo &&
+	git add foo &&
+	git commit -m "make it non-ff" &&
+	git checkout master
+
+'
 
 test_expect_success 'with no hook' '
 
 	echo "foo" > file &&
 	git add file &&
 	git commit -m "first"
+
+'
+
+test_expect_success 'with no hook (merge)' '
+
+	git checkout side &&
+	git merge -m "merge master" master &&
+	git checkout master
 
 '
 
@@ -20,21 +41,39 @@ test_expect_success '--no-verify with no hook' '
 
 '
 
+test_expect_success '--no-verify with no hook (merge)' '
+
+	git checkout side &&
+	git merge --no-verify -m "merge master" master &&
+	git checkout master
+
+'
+
 # now install hook that always succeeds
 HOOKDIR="$(git rev-parse --git-dir)/hooks"
 HOOK="$HOOKDIR/pre-commit"
+MERGEHOOK="$HOOKDIR/pre-merge"
 mkdir -p "$HOOKDIR"
 cat > "$HOOK" <<EOF
 #!/bin/sh
 exit 0
 EOF
 chmod +x "$HOOK"
+cp -p "$HOOK" "$MERGEHOOK"
 
 test_expect_success 'with succeeding hook' '
 
 	echo "more" >> file &&
 	git add file &&
 	git commit -m "more"
+
+'
+
+test_expect_success 'with succeeding hook (merge)' '
+
+	git checkout side &&
+	git merge -m "merge master" master &&
+	git checkout master
 
 '
 
@@ -46,11 +85,20 @@ test_expect_success '--no-verify with succeeding hook' '
 
 '
 
+test_expect_success '--no-verify with succeeding hook (merge)' '
+
+	git checkout side &&
+	git merge --no-verify -m "merge master" master &&
+	git checkout master
+
+'
+
 # now a hook that fails
 cat > "$HOOK" <<EOF
 #!/bin/sh
 exit 1
 EOF
+cp -p "$HOOK" "$MERGEHOOK"
 
 test_expect_success 'with failing hook' '
 
@@ -65,6 +113,22 @@ test_expect_success '--no-verify with failing hook' '
 	echo "stuff" >> file &&
 	git add file &&
 	git commit --no-verify -m "stuff"
+
+'
+
+test_expect_success 'with failing hook (merge)' '
+
+	git checkout side &&
+	test_must_fail git merge -m "merge master" master &&
+	git checkout master
+
+'
+
+test_expect_success '--no-verify with failing hook (merge)' '
+
+	git checkout side &&
+	git merge --no-verify -m "merge master" master &&
+	git checkout master
 
 '
 
