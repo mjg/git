@@ -6,6 +6,19 @@ special notations explained in the description, additional commit
 limiting may be applied. Note that they are applied before commit
 ordering and formatting options, such as '--reverse'.
 
+Different options are ANDed: '--author=bar --grep=foo'
+limits to commits which match both conditions.
+
+Several occurences of the '--grep' option are ORed: '--grep=foo --grep=bar'
+limits to commits matching any of these conditions.
+(If '--all-match' is given, the conditions are ANDed.)
+
+Several occurences of the '--author' and '--committer' options are ORed
+(because there can be only one each per commit).
+
+For all other options, only the last occurence of the same option is
+taken into account: '-n 5 -3' is '-3' and '-n 3 -n 5' is '-n 5'.
+
 --
 
 -n 'number'::
@@ -47,7 +60,7 @@ endif::git-rev-list[]
 
 --all-match::
 	Limit the commits output to ones that match all given --grep,
-	--author and --committer instead of ones that match at least one.
+	instead of ones that match at least one.
 
 -i::
 --regexp-ignore-case::
