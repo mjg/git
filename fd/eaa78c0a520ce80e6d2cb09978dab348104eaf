@@ -1,0 +1,7 @@
+So, here's a simple patch implementing tilde expansion for git-dir. It passes
+all tests. It's done doing the expansion on the setting side.
+
+Alternatively, one might do it on the getting side, i.e. when reading GIT_DIR,
+so that paths passed directly through the environment undergo tilde expansion
+as well. We don't do this for any environment variable yet, so I didn't go
+that far.
