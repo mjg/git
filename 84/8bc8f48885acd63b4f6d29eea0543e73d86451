@@ -1,1 +1,2 @@
-v3 safeguards the hex buffer against reuse
+v4 names the aux variable more concisely and does away with a superfluous
+assignment.
