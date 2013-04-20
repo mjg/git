@@ -156,7 +156,7 @@ test_expect_success 'setup textconv filters' '
 	git config diff.foo.textconv "\"$(pwd)\""/nul_to_q_textconv
 '
 
-test_expect_failure 'grep does not honor textconv' '
+test_expect_success 'grep does honor textconv' '
 	echo "a:binaryQfile" >expect &&
 	git grep Qfile >actual &&
 	test_cmp expect actual
@@ -172,7 +172,7 @@ test_expect_success 'grep --no-textconv does not honor textconv' '
 	test_must_fail git grep --no-textconv Qfile
 '
 
-test_expect_failure 'grep blob does not honor textconv' '
+test_expect_success 'grep blob does honor textconv' '
 	echo "HEAD:a:binaryQfile" >expect &&
 	git grep Qfile HEAD:a >actual &&
 	test_cmp expect actual

@@ -31,6 +31,7 @@ void init_grep_defaults(void)
 	opt->max_depth = -1;
 	opt->pattern_type_option = GREP_PATTERN_TYPE_UNSPECIFIED;
 	opt->extended_regexp_option = 0;
+	opt->allow_textconv = 1;
 	strcpy(opt->color_context, "");
 	strcpy(opt->color_filename, "");
 	strcpy(opt->color_function, "");
@@ -134,6 +135,7 @@ void grep_init(struct grep_opt *opt, const char *prefix)
 	opt->pathname = def->pathname;
 	opt->regflags = def->regflags;
 	opt->relative = def->relative;
+	opt->allow_textconv = def->allow_textconv;
 
 	strcpy(opt->color_context, def->color_context);
 	strcpy(opt->color_filename, def->color_filename);

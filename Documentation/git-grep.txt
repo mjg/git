@@ -82,10 +82,10 @@ OPTIONS
 
 --textconv::
 	Honor textconv filter settings.
+	This is the default.
 
 --no-textconv::
 	Do not honor textconv filter settings.
-	This is the default.
 
 -i::
 --ignore-case::
