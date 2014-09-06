@@ -3759,6 +3759,8 @@ int parse_merge_opt(struct merge_options *opt, const char *s)
 			return -1;
 		opt->merge_detect_rename = 1;
 	}
+	else if (!strcmp(s, "index-only"))
+		o->no_worktree = 1;
 	/*
 	 * Please update $__git_merge_strategy_options in
 	 * git-completion.bash when you add new options
