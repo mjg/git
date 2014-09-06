@@ -3332,6 +3332,8 @@ int parse_merge_opt(struct merge_options *o, const char *s)
 			return -1;
 		o->detect_rename = 1;
 	}
+	else if (!strcmp(s, "index-only"))
+		o->no_worktree = 1;
 	else
 		return -1;
 	return 0;
