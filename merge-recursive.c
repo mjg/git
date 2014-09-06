@@ -647,11 +647,9 @@ static int update_stages(struct merge_options *opt, const char *path,
 	 * would_lose_untracked).  Instead, reverse the order of the calls
 	 * (executing update_file first and then update_stages).
 	 */
-	int clear = 1;
 	int options = ADD_CACHE_OK_TO_ADD | ADD_CACHE_SKIP_DFCHECK;
-	if (clear)
-		if (remove_file_from_index(opt->repo->index, path))
-			return -1;
+	if (remove_file_from_index(opt->repo->index, path))
+		return -1;
 	if (o)
 		if (add_cacheinfo(opt, o, path, 1, 0, options))
 			return -1;
