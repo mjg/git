@@ -577,13 +577,12 @@ static int show_tree_object(const struct object_id *oid,
 static void show_setup_revisions_tweak(struct rev_info *rev,
 				       struct setup_revision_opt *opt)
 {
-	if (rev->ignore_merges) {
+	if (!rev->merge_diff_mode) {
 		/* There was no "-m" on the command line */
-		rev->ignore_merges = 0;
-		if (!rev->first_parent_only && !rev->combine_merges) {
+		rev->merge_diff_mode = MERGE_DIFF_EACH;
+		if (!rev->first_parent_only) {
 			/* No "--first-parent", "-c", or "--cc" */
-			rev->combine_merges = 1;
-			rev->dense_combined_merges = 1;
+			rev->merge_diff_mode = MERGE_DIFF_COMBINED_CONDENSED;
 		}
 	}
 	if (!rev->diffopt.output_format)
@@ -707,12 +706,8 @@ static void log_setup_revisions_tweak(struct rev_info *rev,
 		rev->diffopt.flags.follow_renames = 1;
 
 	/* Turn --cc/-c into -p --cc/-c when -p was not given */
-	if (!rev->diffopt.output_format && rev->combine_merges)
+	if (!rev->diffopt.output_format && merge_diff_mode_is_any_combined(rev))
 		rev->diffopt.output_format = DIFF_FORMAT_PATCH;
-
-	/* Turn -m on when --cc/-c was given */
-	if (rev->combine_merges)
-		rev->ignore_merges = 0;
 }
 
 int cmd_log(int argc, const char **argv, const char *prefix)

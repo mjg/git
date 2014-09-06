@@ -1632,7 +1632,6 @@ void repo_init_revisions(struct repository *r,
 
 	revs->repo = r;
 	revs->abbrev = DEFAULT_ABBREV;
-	revs->ignore_merges = 1;
 	revs->simplify_history = 1;
 	revs->pruning.repo = r;
 	revs->pruning.flags.recursive = 1;
@@ -2162,18 +2161,14 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
 		revs->diffopt.flags.recursive = 1;
 		revs->diffopt.flags.tree_in_recursive = 1;
 	} else if (!strcmp(arg, "-m")) {
-		revs->ignore_merges = 0;
+		revs->merge_diff_mode = MERGE_DIFF_EACH;
 	} else if (!strcmp(arg, "-c")) {
-		revs->diff = 1;
-		revs->dense_combined_merges = 0;
-		revs->combine_merges = 1;
+		revs->merge_diff_mode = MERGE_DIFF_COMBINED;
 	} else if (!strcmp(arg, "--combined-all-paths")) {
 		revs->diff = 1;
 		revs->combined_all_paths = 1;
 	} else if (!strcmp(arg, "--cc")) {
-		revs->diff = 1;
-		revs->dense_combined_merges = 1;
-		revs->combine_merges = 1;
+		revs->merge_diff_mode = MERGE_DIFF_COMBINED_CONDENSED;
 	} else if (!strcmp(arg, "-v")) {
 		revs->verbose_header = 1;
 	} else if (!strcmp(arg, "--pretty")) {
@@ -2672,9 +2667,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
 			copy_pathspec(&revs->diffopt.pathspec,
 				      &revs->prune_data);
 	}
-	if (revs->combine_merges)
-		revs->ignore_merges = 0;
-	if (revs->combined_all_paths && !revs->combine_merges)
+	if (revs->combined_all_paths && !merge_diff_mode_is_any_combined(revs))
 		die("--combined-all-paths makes no sense without -c or --cc");
 
 	revs->diffopt.abbrev = revs->abbrev;

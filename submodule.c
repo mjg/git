@@ -855,9 +855,7 @@ static void collect_changed_submodules(struct repository *r,
 
 		repo_init_revisions(r, &diff_rev, NULL);
 		init_revisions(&diff_rev, NULL);
-	 	diff_rev.ignore_merges = 0;
-	 	diff_rev.combine_merges = 1;
-	 	diff_rev.dense_combined_merges = 1;
+		diff_rev.merge_diff_mode = MERGE_DIFF_COMBINED_CONDENSED;
 		diff_rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
 		diff_rev.diffopt.format_callback = collect_changed_submodules_cb;
 		diff_rev.diffopt.format_callback_data = &data;
