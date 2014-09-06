@@ -320,6 +320,7 @@ struct index_state {
 	struct split_index *split_index;
 	struct cache_time timestamp;
 	unsigned name_hash_initialized : 1,
+		 has_dir_hash : 1,
 		 initialized : 1,
 		 drop_cache_tree : 1;
 	struct hashmap name_hash;
@@ -334,6 +335,7 @@ extern struct index_state the_index;
 
 /* Name hashing */
 extern int test_lazy_init_name_hash(struct index_state *istate, int try_threaded);
+extern void lazy_init_name_hash(struct index_state *istate, int force_dir_hash);
 extern void add_name_hash(struct index_state *istate, struct cache_entry *ce);
 extern void remove_name_hash(struct index_state *istate, struct cache_entry *ce);
 extern void free_name_hash(struct index_state *istate);
