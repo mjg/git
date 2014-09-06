@@ -913,6 +913,8 @@ static int update_file_flags(struct merge_options *opt,
 {
 	int ret = 0;
 
+	if (opt->conflicts_in_index)
+		update_cache = 1;
 	if (opt->call_depth || opt->no_worktree)
 		update_wd = 0;
 
@@ -3760,7 +3762,9 @@ int parse_merge_opt(struct merge_options *opt, const char *s)
 		opt->merge_detect_rename = 1;
 	}
 	else if (!strcmp(s, "index-only"))
-		o->no_worktree = 1;
+		opt->no_worktree = 1;
+	else if (!strcmp(s, "conflicts-in-index"))
+		opt->conflicts_in_index = 1;
 	/*
 	 * Please update $__git_merge_strategy_options in
 	 * git-completion.bash when you add new options
