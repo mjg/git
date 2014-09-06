@@ -346,7 +346,7 @@ static int git_merge_trees(struct merge_options *o,
 	struct tree_desc t[3];
 
 	memset(&o->unpack_opts, 0, sizeof(o->unpack_opts));
-	if (o->call_depth)
+	if (o->call_depth || o->no_worktree)
 		o->unpack_opts.index_only = 1;
 	else
 		o->unpack_opts.update = 1;
@@ -543,10 +543,10 @@ static void record_df_conflict_files(struct merge_options *o,
 	int i;
 
 	/*
-	 * If we're merging merge-bases, we don't want to bother with
-	 * any working directory changes.
+	 * If we're working in-core only (e.g., merging merge-bases),
+	 * we don't want to bother with any working directory changes.
 	 */
-	if (o->call_depth)
+	if (o->call_depth || o->no_worktree)
 		return;
 
 	/* Ensure D/F conflicts are adjacent in the entries list. */
@@ -871,7 +871,7 @@ static int update_file_flags(struct merge_options *o,
 {
 	int ret = 0;
 
-	if (o->call_depth)
+	if (o->call_depth || o->no_worktree)
 		update_wd = 0;
 
 	if (update_wd) {
@@ -1091,7 +1091,8 @@ static int merge_file_1(struct merge_options *o,
 						       &one->oid,
 						       &a->oid,
 						       &b->oid,
-						       !o->call_depth);
+						       !(o->call_depth ||
+							 o->no_worktree));
 		} else if (S_ISLNK(a->mode)) {
 			switch (o->recursive_variant) {
 			case MERGE_RECURSIVE_NORMAL:
@@ -1206,7 +1207,7 @@ static int handle_change_delete(struct merge_options *o,
 	const char *update_path = path;
 	int ret = 0;
 
-	if (dir_in_way(path, !o->call_depth, 0) ||
+	if (dir_in_way(path, !(o->call_depth || o->no_worktree), 0) ||
 	    (!o->call_depth && would_lose_untracked(path))) {
 		update_path = alt_path = unique_path(o, path, change_branch);
 	}
@@ -1337,10 +1338,10 @@ static int handle_file(struct merge_options *o,
 		 *    2) no_wd iff !update_wd
 		 *    3) so, no_wd == !!ren_src_was_dirty == ren_src_was_dirty
 		 */
-		remove_file(o, 0, rename->path, ren_src_was_dirty);
+		remove_file(o, 0, rename->path, ren_src_was_dirty || o->call_depth || o->no_worktree);
 		dst_name = unique_path(o, rename->path, cur_branch);
 	} else {
-		if (dir_in_way(rename->path, !o->call_depth, 0)) {
+		if (dir_in_way(rename->path, !(o->call_depth || o->no_worktree), 0)) {
 			dst_name = unique_path(o, rename->path, cur_branch);
 			output(o, 1, _("%s is a directory in %s adding as %s instead"),
 			       rename->path, other_branch, dst_name);
@@ -1465,7 +1466,7 @@ static int conflict_rename_rename_2to1(struct merge_options *o,
 		 * merge base just undo the renames; they can be detected
 		 * again later for the non-recursive merge.
 		 */
-		remove_file(o, 0, path, 0);
+		remove_file(o, 0, path, o->call_depth || o->no_worktree);
 		ret = update_file(o, 0, &mfi_c1.oid, mfi_c1.mode, a->path);
 		if (!ret)
 			ret = update_file(o, 0, &mfi_c2.oid, mfi_c2.mode,
@@ -1489,7 +1490,7 @@ static int conflict_rename_rename_2to1(struct merge_options *o,
 				       "%s, even though it's in the way."),
 			       path);
 		else
-			remove_file(o, 0, path, 0);
+			remove_file(o, 0, path, o->call_depth || o->no_worktree);
 		ret = update_file(o, 0, &mfi_c1.oid, mfi_c1.mode, new_path1);
 		if (!ret)
 			ret = update_file(o, 0, &mfi_c2.oid, mfi_c2.mode,
@@ -2415,6 +2416,7 @@ static int process_renames(struct merge_options *o,
 			 * add-source case).
 			 */
 			remove_file(o, 1, ren1_src,
+				    o->call_depth || o->no_worktree ||
 				    renamed_stage == 2 || !was_tracked(ren1_src));
 
 			oidcpy(&src_other.oid,
@@ -2760,7 +2762,7 @@ static int merge_content(struct merge_options *o,
 			 o->branch2 == rename_conflict_info->branch1) ?
 			pair1->two->path : pair1->one->path;
 
-		if (dir_in_way(path, !o->call_depth,
+		if (dir_in_way(path, !(o->call_depth || o->no_worktree),
 			       S_ISGITLINK(pair1->two->mode)))
 			df_conflict_remains = 1;
 	}
@@ -2780,7 +2782,7 @@ static int merge_content(struct merge_options *o,
 		 */
 		if (was_tracked(path)) {
 			add_cacheinfo(o, mfi.mode, &mfi.oid, path,
-				      0, (!o->call_depth), 0);
+				      0, !(o->call_depth || o->no_worktree), 0);
 			return mfi.clean;
 		}
 	} else
@@ -2920,7 +2922,8 @@ static int process_entry(struct merge_options *o,
 			if (a_oid)
 				output(o, 2, _("Removing %s"), path);
 			/* do not touch working file if it did not exist */
-			remove_file(o, 1, path, !a_oid);
+			remove_file(o, 1, path,
+				    o->call_depth || o->no_worktree || !a_oid);
 		} else {
 			/* Modify/delete; deleted side may have put a directory in the way */
 			clean_merge = 0;
@@ -2953,7 +2956,7 @@ static int process_entry(struct merge_options *o,
 			conf = _("directory/file");
 		}
 		if (dir_in_way(path,
-			       !o->call_depth && !S_ISGITLINK(a_mode),
+			       !o->call_depth && !o->no_worktree && !S_ISGITLINK(a_mode),
 			       0)) {
 			char *new_path = unique_path(o, path, add_branch);
 			clean_merge = 0;
@@ -2982,7 +2985,8 @@ static int process_entry(struct merge_options *o,
 		 * this entry was deleted altogether. a_mode == 0 means
 		 * we had that path and want to actively remove it.
 		 */
-		remove_file(o, 1, path, !a_mode);
+		remove_file(o, 1, path,
+			    o->call_depth || o->no_worktree || !a_mode);
 	} else
 		die("BUG: fatal merge failure, shouldn't happen.");
 
