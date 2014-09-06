@@ -3401,7 +3401,7 @@ int merge_trees(struct merge_options *opt,
 	int code, clean;
 	struct strbuf sb = STRBUF_INIT;
 
-	if (!opt->call_depth && repo_index_has_changes(opt->repo, head, &sb)) {
+	if (!opt->call_depth && !opt->conflicts_in_index && repo_index_has_changes(opt->repo, head, &sb)) {
 		err(opt, _("Your local changes to the following files would be overwritten by merge:\n  %s"),
 		    sb.buf);
 		return -1;
@@ -3577,7 +3577,7 @@ int merge_recursive(struct merge_options *opt,
 	}
 
 	discard_index(opt->repo->index);
-	if (!opt->call_depth)
+	if (!opt->call_depth && opt->use_ondisk_index)
 		repo_read_index(opt->repo);
 
 	opt->ancestor = "merged common ancestors";
@@ -3700,6 +3700,7 @@ void init_merge_options(struct merge_options *opt,
 	opt->diff_detect_rename = -1;
 	opt->merge_detect_rename = -1;
 	opt->detect_directory_renames = 1;
+	opt->use_ondisk_index = 1;
 	merge_recursive_config(opt);
 	merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
 	if (merge_verbosity)

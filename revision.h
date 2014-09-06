@@ -78,7 +78,9 @@ enum merge_diff_mode {
 	/* combined format (-c) */
 	MERGE_DIFF_COMBINED,
 	/* combined-condensed format (-cc) */
-	MERGE_DIFF_COMBINED_CONDENSED
+	MERGE_DIFF_COMBINED_CONDENSED,
+	/* --remerge-diff */
+	MERGE_DIFF_REMERGE
 };
 
 struct rev_info {
