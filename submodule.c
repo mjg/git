@@ -779,10 +779,13 @@ static void collect_changed_submodules(struct string_list *changed,
 		data.commit_oid = &commit->object.oid;
 
 		init_revisions(&diff_rev, NULL);
+	 	diff_rev.ignore_merges = 0;
+	 	diff_rev.combine_merges = 1;
+	 	diff_rev.dense_combined_merges = 1;
 		diff_rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
 		diff_rev.diffopt.format_callback = collect_changed_submodules_cb;
 		diff_rev.diffopt.format_callback_data = &data;
-		diff_tree_combined_merge(commit, 1, &diff_rev);
+		diff_tree_combined_merge(commit, &diff_rev);
 	}
 
 	reset_revision_walk();
