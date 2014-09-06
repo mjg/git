@@ -314,6 +314,7 @@ struct index_state {
 	struct split_index *split_index;
 	struct cache_time timestamp;
 	unsigned name_hash_initialized : 1,
+		 has_dir_hash : 1,
 		 initialized : 1,
 		 drop_cache_tree : 1,
 		 updated_workdir : 1,
@@ -330,6 +331,7 @@ struct index_state {
 
 /* Name hashing */
 int test_lazy_init_name_hash(struct index_state *istate, int try_threaded);
+void lazy_init_name_hash(struct index_state *istate, int force_dir_hash);
 void add_name_hash(struct index_state *istate, struct cache_entry *ce);
 void remove_name_hash(struct index_state *istate, struct cache_entry *ce);
 void free_name_hash(struct index_state *istate);

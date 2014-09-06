@@ -109,7 +109,7 @@ static void hash_index_entry(struct index_state *istate, struct cache_entry *ce)
 	hashmap_entry_init(ce, memihash(ce->name, ce_namelen(ce)));
 	hashmap_add(&istate->name_hash, ce);
 
-	if (ignore_case)
+	if (istate->has_dir_hash)
 		add_dir_entry(istate, ce);
 }
 
@@ -566,7 +566,8 @@ static void threaded_lazy_init_name_hash(
 	free(lazy_entries);
 }
 
-static void lazy_init_name_hash(struct index_state *istate)
+
+void lazy_init_name_hash(struct index_state *istate, int force_dir_hash)
 {
 
 	if (istate->name_hash_initialized)
@@ -574,6 +575,8 @@ static void lazy_init_name_hash(struct index_state *istate)
 	trace_performance_enter();
 	hashmap_init(&istate->name_hash, cache_entry_cmp, NULL, istate->cache_nr);
 	hashmap_init(&istate->dir_hash, dir_entry_cmp, NULL, istate->cache_nr);
+
+	istate->has_dir_hash = force_dir_hash || ignore_case;
 
 	if (lookup_lazy_params(istate)) {
 		/*
@@ -609,7 +612,7 @@ int test_lazy_init_name_hash(struct index_state *istate, int try_threaded)
 	lazy_nr_dir_threads = 0;
 	lazy_try_threaded = try_threaded;
 
-	lazy_init_name_hash(istate);
+	lazy_init_name_hash(istate, 0);
 
 	return lazy_nr_dir_threads;
 }
@@ -627,7 +630,7 @@ void remove_name_hash(struct index_state *istate, struct cache_entry *ce)
 	ce->ce_flags &= ~CE_HASHED;
 	hashmap_remove(&istate->name_hash, ce, ce);
 
-	if (ignore_case)
+	if (istate->has_dir_hash)
 		remove_dir_entry(istate, ce);
 }
 
@@ -671,7 +674,7 @@ int index_dir_exists(struct index_state *istate, const char *name, int namelen)
 {
 	struct dir_entry *dir;
 
-	lazy_init_name_hash(istate);
+	lazy_init_name_hash(istate, 0);
 	dir = find_dir_entry(istate, name, namelen);
 	return dir && dir->nr;
 }
@@ -681,7 +684,7 @@ void adjust_dirname_case(struct index_state *istate, char *name)
 	const char *startPtr = name;
 	const char *ptr = startPtr;
 
-	lazy_init_name_hash(istate);
+	lazy_init_name_hash(istate, 0);
 	while (*ptr) {
 		while (*ptr && *ptr != '/')
 			ptr++;
@@ -703,7 +706,7 @@ struct cache_entry *index_file_exists(struct index_state *istate, const char *na
 {
 	struct cache_entry *ce;
 
-	lazy_init_name_hash(istate);
+	lazy_init_name_hash(istate, 0);
 
 	ce = hashmap_get_from_hash(&istate->name_hash,
 				   memihash(name, namelen), NULL);
