@@ -374,7 +374,7 @@ static int unpack_trees_start(struct merge_options *opt,
 	struct index_state tmp_index = { NULL };
 
 	memset(&opt->unpack_opts, 0, sizeof(opt->unpack_opts));
-	if (opt->call_depth)
+	if (opt->call_depth || opt->no_worktree)
 		opt->unpack_opts.index_only = 1;
 	else
 		opt->unpack_opts.update = 1;
@@ -583,10 +583,10 @@ static void record_df_conflict_files(struct merge_options *opt,
 	int i;
 
 	/*
-	 * If we're merging merge-bases, we don't want to bother with
-	 * any working directory changes.
+	 * If we're working in-core only (e.g., merging merge-bases),
+	 * we don't want to bother with any working directory changes.
 	 */
-	if (opt->call_depth)
+	if (opt->call_depth || opt->no_worktree)
 		return;
 
 	/* Ensure D/F conflicts are adjacent in the entries list. */
@@ -913,7 +913,7 @@ static int update_file_flags(struct merge_options *opt,
 {
 	int ret = 0;
 
-	if (opt->call_depth)
+	if (opt->call_depth || opt->no_worktree)
 		update_wd = 0;
 
 	if (update_wd) {
@@ -1158,7 +1158,7 @@ static int merge_submodule(struct merge_options *opt,
 	struct object_array merges;
 
 	int i;
-	int search = !opt->call_depth;
+	int search = !(opt->call_depth || opt->no_worktree);
 
 	/* store a in result in case we fail */
 	oidcpy(result, a);
@@ -1422,7 +1422,7 @@ static int handle_change_delete(struct merge_options *opt,
 	const char *update_path = path;
 	int ret = 0;
 
-	if (dir_in_way(opt->repo->index, path, !opt->call_depth, 0) ||
+	if (dir_in_way(opt->repo->index, path, !(opt->call_depth || opt->no_worktree), 0) ||
 	    (!opt->call_depth && would_lose_untracked(opt, path))) {
 		update_path = alt_path = unique_path(opt, path, change_branch);
 	}
@@ -2744,6 +2744,7 @@ static int process_renames(struct merge_options *opt,
 			 * add-source case).
 			 */
 			remove_file(opt, 1, ren1_src,
+				    opt->call_depth || opt->no_worktree ||
 				    renamed_stage == 2 || !was_tracked(opt, ren1_src));
 
 			oidcpy(&src_other.oid,
@@ -3019,7 +3020,7 @@ static int handle_content_merge(struct merge_file_info *mfi,
 		reason = _("add/add");
 
 	assert(o->path && a->path && b->path);
-	if (ci && dir_in_way(opt->repo->index, path, !opt->call_depth,
+	if (ci && dir_in_way(opt->repo->index, path, !(opt->call_depth || opt->no_worktree),
 			     S_ISGITLINK(ci->ren1->pair->two->mode)))
 		df_conflict_remains = 1;
 
@@ -3040,23 +3041,31 @@ static int handle_content_merge(struct merge_file_info *mfi,
 		struct cache_entry *ce;
 
 		output(opt, 3, _("Skipped %s (merged same as existing)"), path);
-		if (add_cacheinfo(opt, &mfi->blob, path,
-				  0, (!opt->call_depth && !is_dirty), 0))
-			return -1;
 		/*
-		 * However, add_cacheinfo() will delete the old cache entry
-		 * and add a new one.  We need to copy over any skip_worktree
-		 * flag to avoid making the file appear as if it were
-		 * deleted by the user.
+		 * The content merge resulted in the same file contents we
+		 * already had.  We can return early if those file contents
+		 * are recorded at the correct path (which may not be true
+		 * if the merge involves a rename).
 		 */
-		pos = index_name_pos(&opt->orig_index, path, strlen(path));
-		ce = opt->orig_index.cache[pos];
-		if (ce_skip_worktree(ce)) {
-			pos = index_name_pos(opt->repo->index, path, strlen(path));
-			ce = opt->repo->index->cache[pos];
-			ce->ce_flags |= CE_SKIP_WORKTREE;
+		if (was_tracked(opt, path)) {
+			if (add_cacheinfo(opt, &mfi->blob, path,
+				      0, !(opt->call_depth || opt->no_worktree) && !is_dirty, 0))
+				return -1;
+			/*
+			 * However, add_cacheinfo() will delete the old cache entry
+			 * and add a new one.  We need to copy over any skip_worktree
+			 * flag to avoid making the file appear as if it were
+			 * deleted by the user.
+			 */
+			pos = index_name_pos(&opt->orig_index, path, strlen(path));
+			ce = opt->orig_index.cache[pos];
+			if (ce_skip_worktree(ce)) {
+				pos = index_name_pos(opt->repo->index, path, strlen(path));
+				ce = opt->repo->index->cache[pos];
+				ce->ce_flags |= CE_SKIP_WORKTREE;
+			}
+			return mfi->clean;
 		}
-		return mfi->clean;
 	}
 
 	if (!mfi->clean) {
@@ -3300,7 +3309,8 @@ static int process_entry(struct merge_options *opt,
 			if (a_valid)
 				output(opt, 2, _("Removing %s"), path);
 			/* do not touch working file if it did not exist */
-			remove_file(opt, 1, path, !a_valid);
+			remove_file(opt, 1, path,
+				    opt->call_depth || opt->no_worktree || !a_valid);
 		} else {
 			/* Modify/delete; deleted side may have put a directory in the way */
 			clean_merge = 0;
@@ -3329,7 +3339,7 @@ static int process_entry(struct merge_options *opt,
 			conf = _("directory/file");
 		}
 		if (dir_in_way(opt->repo->index, path,
-			       !opt->call_depth && !S_ISGITLINK(a->mode),
+			       !opt->call_depth && !opt->no_worktree && !S_ISGITLINK(a->mode),
 			       0)) {
 			char *new_path = unique_path(opt, path, add_branch);
 			clean_merge = 0;
@@ -3371,7 +3381,8 @@ static int process_entry(struct merge_options *opt,
 		 * this entry was deleted altogether. a_mode == 0 means
 		 * we had that path and want to actively remove it.
 		 */
-		remove_file(opt, 1, path, !a->mode);
+		remove_file(opt, 1, path,
+			    opt->call_depth || opt->no_worktree || !a->mode);
 	} else
 		BUG("fatal merge failure, shouldn't happen.");
 

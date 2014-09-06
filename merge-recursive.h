@@ -20,6 +20,8 @@ struct merge_options {
 	const char *subtree_shift;
 	unsigned buffer_output; /* 1: output at end, 2: keep buffered */
 	unsigned renormalize : 1;
+	unsigned gently : 1;
+	unsigned no_worktree : 1; /* do not touch worktree */
 	long xdl_opts;
 	int verbosity;
 	int detect_directory_renames;
