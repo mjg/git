@@ -274,13 +274,21 @@ store_stash () {
 }
 
 push_stash () {
+	checkpoint=
 	keep_index=
 	patch_mode=
 	untracked=
 	stash_msg=
+	reset=t
 	while test $# != 0
 	do
 		case "$1" in
+		-c|--checkpoint|--no-reset)
+			reset=
+			;;
+		-r|--reset)
+			reset=t
+			;;
 		-k|--keep-index)
 			keep_index=t
 			;;
@@ -354,6 +362,11 @@ push_stash () {
 	store_stash -m "$stash_msg" -q $w_commit ||
 	die "$(gettext "Cannot save the current status")"
 	say "$(eval_gettext "Saved working directory and index state \$stash_msg")"
+
+	if test -z "$reset"
+	then
+		exit 0
+	fi
 
 	if test -z "$patch_mode"
 	then
@@ -756,6 +769,10 @@ save)
 push)
 	shift
 	push_stash "$@"
+	;;
+checkpoint)
+	shift
+	save_stash "--no-reset" "$@"
 	;;
 apply)
 	shift
