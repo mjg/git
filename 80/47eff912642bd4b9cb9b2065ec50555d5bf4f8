@@ -1,0 +1,19 @@
+The wording is still different:
+
+HEAD detached at %s
+* (detached at %s)
+
+for status (line 1) resp. branch (line 2). Maybe it's worthwhile to use the
+exact same string so that l10n output is guaranteed to be the same? E.g.
+
+a)
+HEAD detached at %s
+* (HEAD detached at %s)
+
+or
+b)
+HEAD (detached at %s)
+* (detached at %s)
+
+In case b), "git status" strings would need to change, in case a)
+only "git branch" strings which change anyway by this patch.
