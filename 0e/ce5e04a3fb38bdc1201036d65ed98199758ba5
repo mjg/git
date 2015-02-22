@@ -1,0 +1,9 @@
+v2 uses the info from refactored wt-status.
+
+In addition, it makes sure that branch and status use the same
+strings so that they get translated the same:
+
+HEAD detached at %s
+* (HEAD detached at %s)
+
+(status first line, branch second line)
