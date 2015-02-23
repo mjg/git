@@ -1,0 +1,3 @@
+All tests run fine with this changed behavior. I don't know
+whether this may have any side-effects on other (untested)
+uses of the sequencer.
