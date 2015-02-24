@@ -1,3 +1,5 @@
+v2 uses the info from refactored wt-status.
+
 The wording is still different:
 
 HEAD detached at %s
