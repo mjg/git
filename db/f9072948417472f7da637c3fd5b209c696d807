@@ -1,0 +1,8 @@
+v2 decorates the HEAD pointing to master as "HEAD->master", a detached
+HEAD just as "HEAD". The "->" hopefully conveys the symlink nature - a
+"=" would be confusing.
+
+Somehow I still prefer "detached HEAD", dunno. Maybe in addition?
+
+Note that now a checked branch is listed twice, once as target of the
+HEAD, once as branch: They are two different refs and colored differently.
