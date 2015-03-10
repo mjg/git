@@ -1,0 +1,2 @@
+The patch is really Junio's now.
+I just simplified the if's and added colors and tests.
