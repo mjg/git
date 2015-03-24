@@ -1,0 +1,15 @@
+While trying to increase my test run coverage I noticed that most of us won't
+run t9119 at all. Bad bad.
+
+My svn is 1.8.11 (r1643975) on Fedora 21.
+
+I would appreciate help with the following items:
+
+TBC = to be confirmed: confirm the svn version where this change kicked it,
+or run this patch and t9119 with an svn version other than mine. Please
+run with "-v" to make sure only the RFH item fails, see below.
+
+RFH = request for help: I couldn't figure out how to get the working
+copy root path in cmd_info.
+
+18 subtests will fail because of the RFH item.
