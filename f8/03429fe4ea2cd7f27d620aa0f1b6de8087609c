@@ -1,6 +1,0 @@
-patterns for branch list
-
-v3 has reworded commit messages for 2,3,4 and tests for combinations
-of branch options in 4, as suggested.
-
-No code changes (besides the additional tests in 4).

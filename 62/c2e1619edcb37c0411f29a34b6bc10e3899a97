@@ -1,3 +1,0 @@
-Why is it that even with LANG=C exported, gcc gives localized warnings?
-
-And yes, I'm on gcc 4.6 now (F15)...

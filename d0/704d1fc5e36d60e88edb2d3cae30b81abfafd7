@@ -1,7 +1,0 @@
-mg/branch-list amendment
-
-So, this is what the top 2 commits in mg/branch-list should be replaced
-with if we don't let "-v" activate list mode, so that we can have a verbose
-option for branch creation later on, i.e.:
-
-git branch -v foo is the verbose version of git branch

@@ -1,6 +1,0 @@
-Virtual refs for refname objects
-
-For each ref, pretend that the corresponding refname object is referenced
-to keep it from being pruned. This still requires branch note code to
-write out these objects.
-(Unused earlier approach using pretend_sha1....)

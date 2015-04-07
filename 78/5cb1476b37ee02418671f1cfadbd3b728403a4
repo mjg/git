@@ -1,8 +1,0 @@
-diff.c: --stat-count=<n>
-
-So, this grew into a little series because of the issue in 1/3. The fact
-that we looked up the name for a diff item  even when we don't display it
-was never great but started being bad when we started not to fill in
-unnecessary names... With that segv out of the way, here's v3 of the series.
-
-Compared to v2, I hope I have learned to count.

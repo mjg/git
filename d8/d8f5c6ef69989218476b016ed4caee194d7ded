@@ -1,4 +1,0 @@
-So, I couldn't reproduce because it depends on the length of the dirname.
-This may be fallout from efad1a5 (ls-files: allow relative pathspec, 2010-06-03)
-but I haven't checked and won't be able to for the next 3 weeks, sorry.
-I just wanted to send out this possible fix before I leave.

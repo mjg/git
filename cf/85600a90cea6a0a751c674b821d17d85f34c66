@@ -1,3 +1,0 @@
-Maybe this doc fix would do. Just tag the hotfix and tell people to cherry-pick it
-like this. I don't think "git bisect --with-fix=hotfix" would be much simpler.
-(culling kernel list from cc - don't apply this to the wrong tree :)

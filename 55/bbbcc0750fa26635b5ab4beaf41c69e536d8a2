@@ -1,4 +1,0 @@
-I'm somewhat torn between --move and --rename for -m. We have no real precedent
-besides "git remote rename".
-
-I left out -M and -D because I feel they should really be -m -f resp. -d -f.

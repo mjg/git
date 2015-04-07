@@ -1,8 +1,0 @@
-This changes behavior, yes, but using "git remote show" output for
-scripting is crazy anyway...
-
-What bothers me more is the fact that we have 3 different ouput formats because
-"git remote -v" is so different from "git remote [-v] show $(git remote)".
-But "git remote -v" output is parseable and should stay, whereas "git
-remote show" output should be a proper subset of "git remote -v show"
-output.

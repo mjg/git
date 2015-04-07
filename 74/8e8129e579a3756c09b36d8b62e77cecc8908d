@@ -1,9 +1,0 @@
-Pseudo revs for refnames
-
-Introduce "ref:foo" to denote the (virtual) refname object for the ref named
-"foo". This is handy for now (editing branch and tag notes) but should
-become obsoleted by a better ui, such as "git branch --edit foo" or
-"git notes --refname edit foo".
-
-Introduce "ref:" as a shortcut to "ref:HEAD" which is the refname object
-for the current branch.

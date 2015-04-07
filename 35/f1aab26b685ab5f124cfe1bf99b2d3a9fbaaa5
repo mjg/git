@@ -1,4 +1,0 @@
-Basically this is your patch now, Junio, which is why it disappeared from my
-radar. But I don't think you applied it, so I'm resubmitting.
-
-v2 shuts up init unconditionally (even with -v), as you preferred.

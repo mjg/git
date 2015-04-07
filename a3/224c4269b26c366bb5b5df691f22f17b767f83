@@ -1,9 +1,0 @@
-v2 does it the --left/right-only way, which I hope is the right way :)
-
-Those new limiters work together with --left-right, --cherry-pick etc.
-
-It could be followed up by introducing --cherry as equivalent to
---cherry-pick --right-only --ignore-merges
-and optionally making this work for A..B, or making "--cherry-pick A..B"
-invoke "--cherry-pick --right-only A...B" which would make a lot of sense
-but also change existing behavior.

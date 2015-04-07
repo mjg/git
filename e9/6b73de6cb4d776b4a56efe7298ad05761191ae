@@ -1,5 +1,0 @@
-read-tree cleanups
-
-These are a few cleanups I noticed while checking Joshua's sparse checkout
-problem when swithcing branches with a dirty sparse tree.
-They are independent of a possible fix.

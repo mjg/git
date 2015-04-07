@@ -1,9 +1,0 @@
-I'm somehow stuck in textconv/filespec/... hell, so I'm sending this out
-in request for help. I'm sure there are people for whom it's a breeze to
-get this right.
-
-The difficulty is in getting the different cases (blob/sha1 vs.
-worktree) right, and in making the changes minimally invasive. It seems
-that some more refactoring could help: "git show --textconv" does not
-use textconv filters when used on blobs either. (It does for diffs, of
-course.) Most existing helper functions are tailored for diffs.
