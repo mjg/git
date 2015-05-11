@@ -1,6 +1,0 @@
-This is WIP and RFH. Apache does not start without mpm, and the lock
-mechanism has changed. It will run with these changes, but svn fails to
-connect.
-
-Again, I'm wondering who is running these tests at all, but also:
-Why do we leverage lib-httpd so little from lib-git-svn?
