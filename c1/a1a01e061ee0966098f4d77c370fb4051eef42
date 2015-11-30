@@ -1,0 +1,13 @@
+This patch solves the pruning problem with worktrees, but I feel quite
+uneasy about substituting the ref solving at the very heart of refs.c. So
+please consider this a mere poc and a request for discussion/input
+about how to do this the right way.
+
+I'll cook up a test in proper form, but all you have to do is "worktree
+add --detach new" and build a new commit on top of the detached head in
+the new worktree. Compare "git prune -n" in "new" and the main worktree...
+
+In essence, I feel the worktree interface still has to evolve a bit: I'd
+rather for_each_worktree than loop myself, and if many call sites need to
+be aware of multiple heads or worktrees than get_worktrees() should be
+part of our init stuff, not here.
