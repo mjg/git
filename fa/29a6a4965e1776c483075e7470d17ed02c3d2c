@@ -1,0 +1,3 @@
+Note that ever since
+f0298cf (revision walker: include a detached HEAD in --all, 2009-01-16)
+the documentation failed to mention the inclusion of HEAD with "--all".
