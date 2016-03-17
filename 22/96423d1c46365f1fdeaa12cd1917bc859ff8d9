@@ -1,3 +1,6 @@
 This makes it easier to recreate po (and mo) without reading po/README.
 Alternatively, one may think about a Makefile in po/ which does both pot
 and po updates, just like we have makefiles in t/ and Ducumentation/.
+
+This doesn't give you proper before-after diffs yet, but at least the after
+state.
