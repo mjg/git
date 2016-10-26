@@ -1,0 +1,21 @@
+Note that we have the following now:
+
+'git diff A B' displays 'B minus A'
+'git diff A B C' displays 'A minus B' and 'A minus C'
+
+While I know why, that (the implicit '-R' seems unfortunate).
+
+If M is a merge base for A and B, we have:
+
+'git diff A..B' equivalent to 'git diff A B'
+in contrast to 'git log A..B' listing commits between M and B only
+(without the commits between M and A unless they are "in" B).
+
+'git diff A...B' is equivalent to 'git diff M B'
+in contrast to 'git log A...B' listing commits between M and A (marked left)
+as well as commits between M and B (marked right).
+
+Somehow the positive and negative ends of these ranges don't correspond well
+with thinking about diffs as differences between these ends.
+
+[I'm not exact with my use of "between" regarding boundary commits.]
