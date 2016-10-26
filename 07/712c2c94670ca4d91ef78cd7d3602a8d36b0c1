@@ -5,15 +5,21 @@ Note that we have the following now:
 
 While I know why, that (the implicit '-R' seems unfortunate).
 
+(NB: One has to use '-c' if A is an actual merge commiti, it seems.)
+
 If M is a merge base for A and B, we have:
 
 'git diff A..B' equivalent to 'git diff A B'
 in contrast to 'git log A..B' listing commits between M and B only
 (without the commits between M and A unless they are "in" B).
 
+I would expect 'git diff M B' here.
+
 'git diff A...B' is equivalent to 'git diff M B'
 in contrast to 'git log A...B' listing commits between M and A (marked left)
 as well as commits between M and B (marked right).
+
+I would expect 'git diff -c -R M A B' here.
 
 Somehow the positive and negative ends of these ranges don't correspond well
 with thinking about diffs as differences between these ends.
