@@ -1,0 +1,64 @@
+Originally, I didn't even think of submitting this as is until I noticed that
+all tests succeed with it (bar one for git-prompt.h which looked strange
+anyways); rather, I thought about another switch "--lightweight" or so.
+
+I still submit it as RFD. This origin of my foray into name-rev came from
+git describe, where a fair expectation should be that "--contains" mode
+is the same as the odinary mode, albeit with a different direction in
+time/traversal. (Technically, describe --contains is name-rev.)
+
+Consider the following:
+
+git init
+echo past >tense
+git add tense
+git commit -m past
+git tag -m past -a past
+echo present >tense
+git commit -am present
+git tag present
+echo future >tense
+git commit -am future
+
+"git describe past present future" gives
+
+past
+past-1-g5ad942f
+future
+
+because (as documented) it does not consider lightweight tags, and thus
+has to describe present from the past.
+
+"git describe --tags past present future" gives
+
+past
+present
+future
+
+because (as documented) it does consider lightweight tags.
+
+"git describe --contains past present future" gives
+
+past^0
+future~1
+future^0
+
+and I have a hard time matching that with the documentation
+(describe doc claims that --tags is automatic; name-rev doc does not
+distinguish between tag types).
+"--tags" does not make any difference here, nor does "--all"
+(besides fully qualifying the tags).
+
+"git describe --contains past present future" gives
+
+past^0
+present
+future^0
+
+with this patch (I'm tempted to say: with the present patch),
+which is what I would expect.
+
+I'm wondering whether I'm overlooking any side-effects that our test
+suite doesn't cover, though. In any case, we may want to have
+lightweight tags allowed based on an extra flag (like the
+existing --tags for describe, which means something else for name-rev).
