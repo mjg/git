@@ -207,6 +207,8 @@ static int name_ref(const char *path, const struct object_id *oid, int flags, vo
 	if (o && o->type == OBJ_COMMIT) {
 		struct commit *commit = (struct commit *)o;
 
+		if (taggerdate == ULONG_MAX) /* lightweight tag */
+			taggerdate = commit->date;
 		path = name_ref_abbrev(path, can_abbreviate_output);
 		name_rev(commit, xstrdup(path), taggerdate, 0, 0, deref);
 	}
