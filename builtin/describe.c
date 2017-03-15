@@ -462,6 +462,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
 
 	if (longformat && abbrev == 0)
 		die(_("--long is incompatible with --abbrev=0"));
+	if (contains && debug)
+		die(_("--debug is incompatible with --contains"));
 
 	if (contains) {
 		struct string_list_item *item;

@@ -69,7 +69,7 @@ OPTIONS
 --debug::
 	Verbosely display information about the searching strategy
 	being employed to standard error.  The tag name will still
-	be printed to standard out.
+	be printed to standard out. This is incompatible with --contains.
 
 --long::
 	Always output the long format (the tag, the number of commits
