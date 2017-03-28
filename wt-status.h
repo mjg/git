@@ -122,6 +122,7 @@ struct wt_status {
 	int commit_template;
 	int show_branch;
 	int show_stash;
+	int show_in_progress;
 	int hints;
 	enum ahead_behind_flags ahead_behind_flags;
 	int detect_rename;
