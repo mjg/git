@@ -1246,10 +1246,12 @@ static struct status_deferred_config {
 	enum wt_status_format status_format;
 	int show_branch;
 	enum ahead_behind_flags ahead_behind;
+	int show_in_progress;
 } status_deferred_config = {
 	STATUS_FORMAT_UNSPECIFIED,
 	-1, /* unspecified */
 	AHEAD_BEHIND_UNSPECIFIED,
+	-1 /* unspecified */
 };
 
 static void finalize_deferred_config(struct wt_status *s)
@@ -1289,6 +1291,10 @@ static void finalize_deferred_config(struct wt_status *s)
 
 	if (s->ahead_behind_flags == AHEAD_BEHIND_UNSPECIFIED)
 		s->ahead_behind_flags = AHEAD_BEHIND_FULL;
+	if (use_deferred_config && s->show_in_progress < 0)
+		s->show_in_progress = status_deferred_config.show_in_progress;
+	if (s->show_in_progress < 0)
+		s->show_in_progress = 0;
 }
 
 static void check_fixup_reword_options(int argc, const char *argv[]) {
@@ -1482,6 +1488,10 @@ static int git_status_config(const char *k, const char *v,
 		s->show_stash = git_config_bool(k, v);
 		return 0;
 	}
+	if (!strcmp(k, "status.inProgress")) {
+		status_deferred_config.show_in_progress = git_config_bool(k, v);
+		return 0;
+	}
 	if (!strcmp(k, "status.color") || !strcmp(k, "color.status")) {
 		s->use_color = git_config_colorbool(k, v);
 		return 0;
@@ -1554,6 +1564,8 @@ struct repository *repo UNUSED)
 			 N_("show stash information")),
 		OPT_BOOL(0, "ahead-behind", &s.ahead_behind_flags,
 			 N_("compute full ahead/behind values")),
+		OPT_BOOL('p', "in-progress", &s.show_in_progress,
+			 N_("show in-progress information")),
 		OPT_CALLBACK_F(0, "porcelain", &status_format,
 		  N_("version"), N_("machine-readable output"),
 		  PARSE_OPT_OPTARG, opt_parse_porcelain),
@@ -1752,6 +1764,7 @@ int cmd_commit(int argc,
 		OPT_BOOL(0, "branch", &s.show_branch, N_("show branch information")),
 		OPT_BOOL(0, "ahead-behind", &s.ahead_behind_flags,
 			 N_("compute full ahead/behind values")),
+		OPT_BOOL(0, "in-progress", &s.show_in_progress, N_("show in-progress information")),
 		OPT_SET_INT(0, "porcelain", &status_format,
 			    N_("machine-readable output"), STATUS_FORMAT_PORCELAIN),
 		OPT_SET_INT(0, "long", &status_format,
