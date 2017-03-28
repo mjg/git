@@ -93,6 +93,12 @@ Unmerged paths:
 no changes added to commit (use "git add" and/or "git commit -a")
 EOF
 	git status --untracked-files=no >actual &&
+	test_cmp expected actual &&
+	cat >expected <<EOF &&
+## HEAD (no branch); REBASE-m
+UU main.txt
+EOF
+	git status --untracked-files=no --short --branch --in-progress >actual &&
 	test_cmp expected actual
 '
 
@@ -154,6 +160,12 @@ Unmerged paths:
 no changes added to commit (use "git add" and/or "git commit -a")
 EOF
 	git status --untracked-files=no >actual &&
+	test_cmp expected actual &&
+	cat >expected <<EOF &&
+## HEAD (no branch); REBASE-i
+UU main.txt
+EOF
+	git status --untracked-files=no --short --branch --in-progress >actual &&
 	test_cmp expected actual
 '
 
@@ -619,6 +631,11 @@ You are in the middle of an am session.
 nothing to commit (use -u to show untracked files)
 EOF
 	git status --untracked-files=no >actual &&
+	test_cmp expected actual &&
+	cat >expected <<\EOF &&
+## am_already_exists; AM
+EOF
+	git status --untracked-files=no --short --branch --in-progress >actual &&
 	test_cmp expected actual
 '
 
@@ -688,6 +705,11 @@ You are currently bisecting, started from branch '\''bisect'\''.
 nothing to commit (use -u to show untracked files)
 EOF
 	git status --untracked-files=no >actual &&
+	test_cmp expected actual &&
+	cat >expected <<EOF &&
+## HEAD (no branch); BISECTING
+EOF
+	git status --untracked-files=no --short --branch --in-progress >actual &&
 	test_cmp expected actual
 '
 
@@ -775,6 +797,12 @@ Unmerged paths:
 no changes added to commit (use "git add" and/or "git commit -a")
 EOF
 	git status --untracked-files=no >actual &&
+	test_cmp expected actual &&
+	cat >expected <<EOF &&
+## cherry_branch; CHERRY-PICKING
+UU main.txt
+EOF
+	git status --untracked-files=no --short --branch --in-progress >actual &&
 	test_cmp expected actual
 '
 
@@ -903,8 +931,15 @@ Unmerged paths:
 no changes added to commit (use "git add" and/or "git commit -a")
 EOF
 	git status --untracked-files=no >actual &&
+	test_cmp expected actual &&
+	cat >expected <<EOF &&
+## main; REVERTING
+UU to-revert.txt
+EOF
+	git status --untracked-files=no --short --branch --in-progress >actual &&
 	test_cmp expected actual
 '
+
 
 test_expect_success 'status while reverting commit (conflicts resolved)' '
 	echo reverted >to-revert.txt &&
