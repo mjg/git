@@ -17,6 +17,10 @@ status.aheadBehind::
 	`--no-ahead-behind` by default in linkgit:git-status[1] for
 	non-porcelain status formats.  Defaults to true.
 
+status.inProgress::
+	Set to true to enable `--in-progress` by default in linkgit:git-status[1].
+	The option `--no-in-progress` takes precedence over this variable.
+
 status.displayCommentPrefix::
 	If set to true, linkgit:git-status[1] will insert a comment
 	prefix before each output line (starting with
