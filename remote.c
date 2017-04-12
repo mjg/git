@@ -1985,7 +1985,9 @@ int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid)
  * Compare a branch with its upstream, and save their differences (number
  * of commits) in *num_ours and *num_theirs. The name of the upstream branch
  * (or NULL if no upstream is defined) is returned via *upstream_name, if it
- * is not itself NULL.
+ * is not itself NULL nor passed in as *upstream_name.
+ *
+ * branch == NULL compares HEAD to *upstream_name.
  *
  * Returns -1 if num_ours and num_theirs could not be filled in (e.g., no
  * upstream defined, or ref does not exist), 0 otherwise.
@@ -2000,11 +2002,17 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
 	struct argv_array argv = ARGV_ARRAY_INIT;
 
 	/* Cannot stat unless we are marked to build on top of somebody else. */
-	base = branch_get_upstream(branch, NULL);
-	if (upstream_name)
-		*upstream_name = base;
-	if (!base)
-		return -1;
+	if (upstream_name && *upstream_name) { /* passed in */
+		if (dwim_ref(*upstream_name, strlen(*upstream_name), oid.hash, (char **) &base) != 1)
+			base = *upstream_name;
+	}
+	else {
+		base = branch_get_upstream(branch, NULL); /* look up */
+		if (upstream_name)
+			*upstream_name = base;
+		if (!base)
+			return -1;
+	}
 
 	/* Cannot stat if what we used to build on no longer exists */
 	if (read_ref(base, oid.hash))
@@ -2013,7 +2021,7 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs,
 	if (!theirs)
 		return -1;
 
-	if (read_ref(branch->refname, oid.hash))
+	if (read_ref((branch && branch->refname) ? branch->refname : "HEAD", oid.hash))
 		return -1;
 	ours = lookup_commit_reference(oid.hash);
 	if (!ours)

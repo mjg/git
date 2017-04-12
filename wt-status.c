@@ -1865,13 +1865,16 @@ static void wt_porcelain_v2_print_tracking(struct wt_status *s)
 	if (!s->branch)
 		fprintf(s->fp, "# branch.head %s%c", "(unknown)", eol);
 	else {
+		base = NULL;
 		if (!strcmp(s->branch, "HEAD")) {
 			fprintf(s->fp, "# branch.head %s%c", "(detached)", eol);
 
 			if (state.rebase_in_progress || state.rebase_interactive_in_progress)
 				branch_name = state.onto;
-			else if (state.detached_from)
-				branch_name = state.detached_from;
+			else if (state.detached_from) {
+				branch_name = "HEAD";
+				base = state.detached_from;
+			}
 			else
 				branch_name = "";
 		} else {
@@ -1883,7 +1886,6 @@ static void wt_porcelain_v2_print_tracking(struct wt_status *s)
 
 		/* Lookup stats on the upstream tracking branch, if set. */
 		branch = branch_get(branch_name);
-		base = NULL;
 		ab_info = (stat_tracking_info(branch, &nr_ahead, &nr_behind, &base) == 0);
 		if (base) {
 			base = shorten_unambiguous_ref(base, 0);

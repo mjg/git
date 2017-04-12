@@ -235,6 +235,9 @@ information about the current branch.
 					     the commit is present.
     ------------------------------------------------------------
 
+In the detached case, branch.upstream gives the ref or commit
+that the head got detached from.
+
 ### Changed Tracked Entries
 
 Following the headers, a series of lines are printed for tracked
