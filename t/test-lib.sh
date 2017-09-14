@@ -994,6 +994,10 @@ case $uname_s in
 	pwd () {
 		builtin pwd -W
 	}
+	# no FIFOs
+	mkfifo () {
+		false
+	}
 	# no POSIX permissions
 	# backslashes in pathspec are converted to '/'
 	# exec does not inherit the PID
@@ -1004,6 +1008,10 @@ case $uname_s in
 	GIT_TEST_CMP=mingw_test_cmp
 	;;
 *CYGWIN*)
+	# no FIFOs
+	mkfifo () {
+		false
+	}
 	test_set_prereq POSIXPERM
 	test_set_prereq EXECKEEPSPID
 	test_set_prereq CYGWIN
@@ -1062,14 +1070,7 @@ test_i18ngrep () {
 
 test_lazy_prereq PIPE '
 	# test whether the filesystem supports FIFOs
-	case $(uname -s) in
-	CYGWIN*|MINGW*)
-		false
-		;;
-	*)
-		rm -f testfifo && mkfifo testfifo
-		;;
-	esac
+	rm -f testfifo && mkfifo testfifo
 '
 
 test_lazy_prereq SYMLINKS '
