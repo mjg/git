@@ -998,6 +998,10 @@ case $uname_s in
 	mkfifo () {
 		false
 	}
+	# ulimit succeeds but does not limit
+	ulimit () {
+		false
+	}
 	# no POSIX permissions
 	# backslashes in pathspec are converted to '/'
 	# exec does not inherit the PID
@@ -1010,6 +1014,10 @@ case $uname_s in
 *CYGWIN*)
 	# no FIFOs
 	mkfifo () {
+		false
+	}
+	# ulimit succeeds but does not limit
+	ulimit () {
 		false
 	}
 	test_set_prereq POSIXPERM
