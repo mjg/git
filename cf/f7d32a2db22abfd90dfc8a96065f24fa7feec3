@@ -1,0 +1,6 @@
+Maybe make "git stash restore" a shortcut to "git stash pop --reset"?
+
+I wouldn't know whether pop or apply.
+
+Also, I'm wondering whether we should hard reset to HEAD or to the base commit
+of the stash.
