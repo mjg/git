@@ -1,4 +1,0 @@
-Reducing the output format to one "---" only is not only complicated (the notes
-separator is generated in a quite different place from the patch separator)
-but also unnecessary (am reads the patch anyways) and not even preferable (to
-give a clear separation of the parts).

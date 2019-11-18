@@ -1,8 +1,0 @@
-v2 uses "verbatim" only if there is no commit.cleanup and neither
--s nor -x
-
-I'm still wondering about the latter two, though: "git commit --amend"
-(or rebase reword) is easy todo compared to recreating a mistakingly
-cleaned up message. (OK, -C, but still...)
-
-I don't care too much either way.
