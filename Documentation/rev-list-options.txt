@@ -328,7 +328,7 @@ Under `--pretty=reference`, this information will not be shown at all.
 
 --boundary::
 	Output excluded boundary commits. Boundary commits are
-	prefixed with `-`.
+	prefixed with `^`.
 
 ifdef::git-rev-list[]
 --use-bitmap-index::
