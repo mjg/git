@@ -1104,7 +1104,7 @@ endif::git-rev-list[]
 	Mark which side of a symmetric difference a commit is reachable from.
 	Commits from the left side are prefixed with `<` and those from
 	the right with `>`.  If combined with `--boundary`, those
-	commits are prefixed with `-`.
+	commits are prefixed with `^`.
 +
 For example, if you have this topology:
 +
@@ -1125,8 +1125,8 @@ you would get an output like this:
 	>bbbbbbb... 2nd on b
 	<aaaaaaa... 3rd on a
 	<aaaaaaa... 2nd on a
-	-yyyyyyy... 1st on b
-	-xxxxxxx... 1st on a
+	^yyyyyyy... 1st on b
+	^xxxxxxx... 1st on a
 -----------------------------------------------------------------------
 
 --graph::

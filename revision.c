@@ -4317,9 +4317,9 @@ struct commit *get_revision(struct rev_info *revs)
 const char *get_revision_mark(const struct rev_info *revs, const struct commit *commit)
 {
 	if (commit->object.flags & BOUNDARY)
-		return "-";
+		return "b";
 	else if (commit->object.flags & UNINTERESTING)
-		return "^";
+		return "U";
 	else if (commit->object.flags & PATCHSAME)
 		return "=";
 	else if (!revs || revs->left_right) {
@@ -4327,7 +4327,9 @@ const char *get_revision_mark(const struct rev_info *revs, const struct commit *
 			return "<";
 		else
 			return ">";
-	} else if (revs->graph)
+	} else if (!commit->parent)
+			return "R";
+	else if (revs->graph)
 		return "*";
 	else if (revs->cherry_mark)
 		return "+";
