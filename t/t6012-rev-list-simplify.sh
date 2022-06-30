@@ -277,7 +277,7 @@ test_expect_success 'log --graph --simplify-merges --show-pulls' '
 	| |/  
 	* / A
 	|/  
-	* I
+	o I
 	EOF
 	git log --graph --pretty="%s" \
 		--simplify-merges --show-pulls \
