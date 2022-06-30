@@ -35,7 +35,7 @@ test_expect_success 'log --graph with merge fusing with its left and right neigh
 	| |/
 	* / B
 	|/
-	* A
+	o A
 	EOF
 '
 
@@ -69,7 +69,7 @@ test_expect_success 'log --graph with left-skewed merge' '
 	|/|
 	| * 0_B
 	|/
-	* 0_A
+	o 0_A
 	EOF
 '
 
@@ -97,7 +97,7 @@ test_expect_success 'log --graph with nested left-skewed merge' '
 	|/ /
 	* / 1_B
 	|/
-	* 1_A
+	o 1_A
 	EOF
 '
 
@@ -134,7 +134,7 @@ test_expect_success 'log --graph with nested left-skewed merge following normal 
 	|/|
 	* | 2_B
 	|/
-	* 2_A
+	o 2_A
 	EOF
 '
 
@@ -167,7 +167,7 @@ test_expect_success 'log --graph with nested right-skewed merge following left-s
 	| |/
 	| * 3_B
 	|/
-	* 3_A
+	o 3_A
 	EOF
 '
 
@@ -199,7 +199,7 @@ test_expect_success 'log --graph with right-skewed merge following a left-skewed
 	| |/
 	| * 4_B
 	|/
-	* 4_A
+	o 4_A
 	EOF
 '
 
@@ -236,7 +236,7 @@ test_expect_success 'log --graph with octopus merge with column joining its penu
 	|/|
 	| * 5_B
 	|/
-	* 5_A
+	o 5_A
 	EOF
 '
 
@@ -278,7 +278,7 @@ test_expect_success 'log --graph with multiple tips' '
 	|/|
 	* | 6_B
 	|/
-	* 6_A
+	o 6_A
 	EOF
 '
 
@@ -304,7 +304,7 @@ test_expect_success 'log --graph with multiple tips and colors' '
 	<CYAN>|<RESET><CYAN>/<RESET><BLUE>|<RESET>
 	* <BLUE>|<RESET> 6_B
 	<BLUE>|<RESET><BLUE>/<RESET>
-	* 6_A
+	o 6_A
 	EOF
 	lib_test_cmp_colored_graph --date-order --pretty=tformat:%s 6_1 6_3 6_5
 '
@@ -367,7 +367,7 @@ test_expect_success 'log --graph with multiple tips' '
 	|/|
 	* | 7_B
 	|/
-	* 7_A
+	o 7_A
 	EOF
 '
 
