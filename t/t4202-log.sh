@@ -579,7 +579,7 @@ cat > expect <<EOF
 * fourth
 * third
 * second
-* initial
+o initial
 EOF
 
 test_expect_success 'simple log --graph' '
@@ -593,7 +593,7 @@ cat > expect <<EOF
 123 * fourth
 123 * third
 123 * second
-123 * initial
+123 o initial
 EOF
 
 test_expect_success 'simple log --graph --line-prefix="123 "' '
@@ -620,7 +620,7 @@ cat > expect <<\EOF
 |/
 * third
 * second
-* initial
+o initial
 EOF
 
 test_expect_success 'log --graph with merge' '
@@ -639,7 +639,7 @@ cat > expect <<\EOF
 | | | |/
 | | | * third
 | | | * second
-| | | * initial
+| | | o initial
 EOF
 
 test_expect_success 'log --graph --line-prefix="| | | " with merge' '
@@ -658,7 +658,7 @@ cat > expect.colors <<\EOF
 <CYAN>|<RESET><CYAN>/<RESET>
 * third
 * second
-* initial
+o initial
 EOF
 
 test_expect_success 'log --graph with merge with log.graphColors' '
@@ -723,7 +723,7 @@ cat > expect <<\EOF
 |
 |     second
 |
-* commit tags/side-1~3
+o commit tags/side-1~3
   Author: A U Thor <author@example.com>
 
       initial
@@ -798,7 +798,7 @@ cat > expect <<\EOF
 * / third
 |/
 * second
-* initial
+o initial
 EOF
 
 test_expect_success 'log --graph with merge' '
@@ -1564,7 +1564,7 @@ cat >expect <<\EOF
 | -one
 | +ichi
 |
-* commit COMMIT_OBJECT_NAME
+o commit COMMIT_OBJECT_NAME
   Author: A U Thor <author@example.com>
 
       initial
@@ -1839,7 +1839,7 @@ cat >expect <<\EOF
 *** | -one
 *** | +ichi
 *** |
-*** * commit COMMIT_OBJECT_NAME
+*** o commit COMMIT_OBJECT_NAME
 ***   Author: A U Thor <author@example.com>
 ***
 ***       initial

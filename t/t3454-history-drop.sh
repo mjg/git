@@ -227,7 +227,7 @@ test_expect_success 'updates branches on other lines of descent' '
 		| * ours
 		|/
 		* target
-		* base
+		o base
 		EOF
 
 		git history drop target &&
@@ -236,7 +236,7 @@ test_expect_success 'updates branches on other lines of descent' '
 		* ours
 		| * theirs
 		|/
-		* base
+		o base
 		EOF
 	)
 '
@@ -332,7 +332,7 @@ test_expect_success '--update-refs=head updates only HEAD' '
 		| * ours
 		|/
 		* target
-		* base
+		o base
 		EOF
 
 		git switch main &&
@@ -343,7 +343,7 @@ test_expect_success '--update-refs=head updates only HEAD' '
 		| * theirs
 		| * target
 		|/
-		* base
+		o base
 		EOF
 	)
 '
