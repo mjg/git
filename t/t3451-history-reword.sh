@@ -97,7 +97,7 @@ test_expect_success 'can reword commit in the middle even on detached head' '
 		| * third_on_main
 		|/
 		* second reworded
-		* first
+		o first
 		EOF
        )
 '
@@ -183,7 +183,7 @@ test_expect_success 'can reword a commit on a different branch' '
 		* Reworded theirs
 		| * ours
 		|/
-		* base
+		o base
 		EOF
 	)
 '
@@ -216,7 +216,7 @@ test_expect_success 'can reword a merge commit' '
 		| * theirs
 		* | ours
 		|/
-		* base
+		o base
 		EOF
 	)
 '

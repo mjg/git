@@ -245,7 +245,7 @@ test_expect_success 'can split HEAD only' '
 		* ours-a
 		| * split-me
 		|/
-		* base
+		o base
 		EOF
 	)
 '
@@ -307,7 +307,7 @@ test_expect_success 'can split commit in unrelated branch' '
 		| * theirs-rewritten-b
 		| * theirs-rewritten-a
 		|/
-		* base
+		o base
 		EOF
 
 		expect_tree_entries theirs~ <<-EOF &&
@@ -351,7 +351,7 @@ test_expect_success 'updates multiple descendant branches' '
 		|/
 		* split-b
 		* split-a
-		* base
+		o base
 		EOF
 	)
 '
