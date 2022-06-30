@@ -352,7 +352,7 @@ test_expect_success 'show line-log with graph' '
 	| -    return F2;
 	| +    return F2 + 2;
 	|  }
-	* $root_oid Add func1() and func2() in file.c
+	o $root_oid Add func1() and func2() in file.c
 	ZZ
 	  diff --git a/file.c b/file.c
 	  --- /dev/null
