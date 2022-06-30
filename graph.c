@@ -931,12 +931,12 @@ static void graph_output_pre_commit_line(struct git_graph *graph,
 static void graph_output_commit_char(struct git_graph *graph, struct graph_line *line)
 {
 	/*
-	 * For boundary commits, print 'o'
+	 * For boundary commits, print '^'
 	 * (We should only see boundary commits when revs->boundary is set.)
 	 */
 	if (graph->commit->object.flags & BOUNDARY) {
 		assert(graph->revs->boundary);
-		graph_line_addch(line, 'o');
+		graph_line_addch(line, '^');
 		return;
 	}
 
