@@ -4317,7 +4317,7 @@ struct commit *get_revision(struct rev_info *revs)
 const char *get_revision_mark(const struct rev_info *revs, const struct commit *commit)
 {
 	if (commit->object.flags & BOUNDARY)
-		return "-";
+		return "^";
 	else if (commit->object.flags & UNINTERESTING)
 		return "U";
 	else if (commit->object.flags & PATCHSAME)
