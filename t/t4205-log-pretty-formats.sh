@@ -385,7 +385,7 @@ test_expect_success 'right alignment formatting at the nth column with --graph. 
 	* $head1                    message two
 	* $head2                    message one
 	* $head3                        add bar
-	* $head4            $(commit_msg)
+	o $head4            $(commit_msg)
 	EOF
 	test_cmp expected actual
 '
@@ -407,7 +407,7 @@ test_expect_success 'right alignment formatting with no padding and with --graph
 	* message two
 	* message one
 	* add bar
-	* $(commit_msg)
+	o $(commit_msg)
 	EOF
 	test_cmp expected actual
 '
