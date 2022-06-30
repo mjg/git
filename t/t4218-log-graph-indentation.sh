@@ -294,8 +294,8 @@ test_expect_success 'unrelated boundaries are not ambiguous' '
 	* 29_B
 	| * 28_C
 	| * 28_B
-	| o 28_A
-	o 29_A
+	| ^ 28_A
+	^ 29_A
 	EOF
 '
 
@@ -344,13 +344,13 @@ test_expect_success 'boundary commits big test' '
 	| * | | 31_B
 	| * | | 31_A
 	* | | | 30_C
-	o | | | 30_B
+	^ | | | 30_B
 	|/ / /
-	o / / 30_A
+	^ / / 30_A
 	 / /
-	| o 32_C
+	| ^ 32_C
 	|/
-	o 32_B
+	^ 32_B
 	EOF
 '
 
