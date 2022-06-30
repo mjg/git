@@ -27,7 +27,7 @@ unset_commit_graph () {
 test_expect_success 'single root commit is not indented' '
 	create_orphan _1 && test_commit 1_A &&
 	lib_test_check_graph _1 <<-\EOF
-	* 1_A
+	o 1_A
 	EOF
 '
 
@@ -35,9 +35,9 @@ test_expect_success 'visual root indented before unrelated branch' '
 	create_orphan _2 && test_commit 2_A && test_commit 2_B &&
 	create_orphan _3 && test_commit 3_A &&
 	lib_test_check_graph _2 _3 <<-\EOF
-	  * 3_A
+	  o 3_A
 	* 2_B
-	* 2_A
+	o 2_A
 	EOF
 '
 
@@ -64,13 +64,13 @@ test_expect_success 'visual root indentation with --left-right having unrelated 
 
 test_expect_success 'visual root indents the description also' '
 	check_graph_with_description _2 _3 <<-\EOF
-	  * 3_A
+	  o 3_A
 	    description
 	    second-line
 	* 2_B
 	| description
 	| second-line
-	* 2_A
+	o 2_A
 	  description
 	  second-line
 	EOF
@@ -82,9 +82,9 @@ test_expect_success 'indented visual root parent gets connected to its child' '
 	lib_test_check_graph _4 _5 <<-\EOF
 	* 5_B
 	 \
-	  * 5_A
+	  o 5_A
 	* 4_B
-	* 4_A
+	o 4_A
 	EOF
 '
 
@@ -94,13 +94,13 @@ test_expect_success 'indented visual root parent gets connected to its child wit
 	| description
 	| second-line
 	 \
-	  * 5_A
+	  o 5_A
 	    description
 	    second-line
 	* 4_B
 	| description
 	| second-line
-	* 4_A
+	o 4_A
 	  description
 	  second-line
 	EOF
@@ -112,19 +112,19 @@ test_expect_success 'visual roots cascade and last root does not' '
 	create_orphan _9 && test_commit 9_A &&
 	create_orphan _10 && test_commit 10_A &&
 	lib_test_check_graph _7 _8 _9 _10 <<-\EOF
-	* 10_A
-	  * 9_A
-	    * 8_A
+	o 10_A
+	  o 9_A
+	    o 8_A
 	* 7_B
-	* 7_A
+	o 7_A
 	EOF
 '
 
 test_expect_success 'last root does not cascade' '
 	lib_test_check_graph _8 _9 _10 <<-\EOF
-	* 10_A
-	  * 9_A
-	* 8_A
+	o 10_A
+	  o 9_A
+	o 8_A
 	EOF
 '
 
@@ -139,9 +139,9 @@ test_expect_success 'merge parents are roots between them but they do not indent
 	lib_test_check_graph _11 <<-\EOF
 	*-.   11_octopus
 	|\ \
-	| | * 13_A
-	| * 12_A
-	* 11_A
+	| | o 13_A
+	| o 12_A
+	o 11_A
 	EOF
 '
 
@@ -161,12 +161,12 @@ test_expect_success 'merge then unrelated visual root and unrelated branch' '
 	lib_test_check_graph _18 _17 _16 <<-\EOF
 	*-.   18_octopus
 	|\ \
-	| | * 20_A
-	| * 19_A
-	* 18_A
-	  * 17_A
+	| | o 20_A
+	| o 19_A
+	o 18_A
+	  o 17_A
 	* 16_B
-	* 16_A
+	o 16_A
 	EOF
 '
 
@@ -176,11 +176,11 @@ test_expect_success 'merge then unrelated root indents merge parent' '
 	lib_test_check_graph _18 _17 <<-\EOF
 	*-.   18_octopus
 	|\ \
-	| | * 20_A
-	| * 19_A
+	| | o 20_A
+	| o 19_A
 	 \
-	  * 18_A
-	* 17_A
+	  o 18_A
+	o 17_A
 	EOF
 '
 
@@ -188,12 +188,12 @@ test_expect_success 'merge then unrelated branch indents merge parent' '
 	lib_test_check_graph _18 _16 <<-\EOF
 	*-.   18_octopus
 	|\ \
-	| | * 20_A
-	| * 19_A
+	| | o 20_A
+	| o 19_A
 	 \
-	  * 18_A
+	  o 18_A
 	* 16_B
-	* 16_A
+	o 16_A
 	EOF
 '
 
@@ -207,8 +207,8 @@ test_expect_success 'two-parent merge of orphans' '
 	lib_test_check_graph _21 <<-\EOF
 	*   21_merge
 	|\
-	| * 22_A
-	* 21_A
+	| o 22_A
+	o 21_A
 	EOF
 '
 
@@ -225,8 +225,8 @@ test_expect_success 'commit with filtered parent becomes a visual root' '
 	git add foo.txt &&
 	git commit -m "24_A" &&
 	lib_test_check_graph _23 _24 -- foo.txt <<-\EOF
-	  * 23_B
-	* 24_A
+	  o 23_B
+	o 24_A
 	EOF
 '
 
@@ -255,9 +255,9 @@ test_expect_success 'filtered parent cascading edge case' '
 	git commit -m "A (visual root)" &&
 
 	lib_test_check_graph _25 _26 _27 -- foo.txt <<-\EOF
-	* A (visual root)
-	  * B (child of filtered)
-	* D (last)
+	o A (visual root)
+	  o B (child of filtered)
+	o D (last)
 	EOF
 '
 
@@ -274,9 +274,9 @@ test_expect_success 'multiple filtered parents in sequence' '
 	echo e >foo.txt && git add foo.txt && git commit -m "46_A" &&
 
 	lib_test_check_graph _44 _45 _46 -- foo.txt <<-\EOF
-	* 44_C
-	  * 45_C
-	* 46_A
+	o 44_C
+	  o 45_C
+	o 46_A
 	EOF
 '
 
@@ -367,10 +367,10 @@ test_expect_success '--first-parent flag with the filtered parents' '
 		git reset --hard $MERGE &&
 		lib_test_check_graph --first-parent _35 _36 _37 <<-\EOF
 		* 35_octopus
-		| * 37_A
-		|   * 36_A
+		| o 37_A
+		|   o 36_A
 		* 35_B
-		* 35_A
+		o 35_A
 		EOF
 	)
 '
@@ -388,10 +388,10 @@ test_expect_success '--first-parent with filtered parents but one has a child' '
 		lib_test_check_graph --first-parent _38 _39 _40 <<-\EOF
 		* 38_octopus
 		| * 40_B
-		| * 40_A
-		|   * 39_A
+		| o 40_A
+		|   o 39_A
 		* 38_B
-		* 38_A
+		o 38_A
 		EOF
 	)
 '
@@ -410,11 +410,11 @@ test_expect_success '--first-parent with filtered parents but both have children
 		* 41_octopus
 		| * 43_B
 		|  \
-		|   * 43_A
+		|   o 43_A
 		| * 42_B
-		| * 42_A
+		| o 42_A
 		* 41_B
-		* 41_A
+		o 41_A
 		EOF
 	)
 '
@@ -439,34 +439,34 @@ test_expect_success 'two unrelated merges' '
 	| * 53_A
 	|/
 	 \
-	  * 52_A
+	  o 52_A
 	*   50_B
 	|\
 	| * 51_B
 	| * 51_A
 	|/
-	* 50_A
+	o 50_A
 	EOF
 '
 
 test_expect_success '--max-count treats the last visible commit as the last commit' '
 	lib_test_check_graph --max-count=2 _8 _9 _10 <<-\EOF
-	  * 10_A
-	* 9_A
+	  o 10_A
+	o 9_A
 	EOF
 '
 
 test_expect_success '--max-count=1 shows a single root without indentation' '
 	lib_test_check_graph --max-count=1 _8 _9 _10 <<-\EOF
-	* 10_A
+	o 10_A
 	EOF
 '
 
 test_expect_success '--max-count-oldest indents visual roots' '
 	lib_test_check_graph --max-count-oldest=3 _8 _9 _10 <<-\EOF
-	* 10_A
-	  * 9_A
-	* 8_A
+	o 10_A
+	  o 9_A
+	o 8_A
 	EOF
 '
 
@@ -488,7 +488,7 @@ test_expect_success '--author skipped parent makes a visual root' '
 	* 54_C
 	 \
 	  * 54_B
-	* 55_A
+	o 55_A
 	EOF
 '
 
@@ -507,7 +507,7 @@ test_expect_success '--grep skipped parent makes a visual root' '
 	* 56_keep_B
 	 \
 	  * 56_keep_A
-	* 57_keep_A
+	o 57_keep_A
 	EOF
 '
 
@@ -526,67 +526,67 @@ test_expect_success 'visual root cascading gets wrapped after 4 columns' '
 	create_orphan _66 && test_commit 66_A &&
 	create_orphan _67 && test_commit 67_A &&
 	lib_test_check_graph _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 <<-\EOF
-	* 67_A
-	  * 66_A
-	    * 65_A
-	      * 64_A
-	* 63_A
-	  * 62_A
-	    * 61_A
-	      * 60_A
-	  * 59_A
+	o 67_A
+	  o 66_A
+	    o 65_A
+	      o 64_A
+	o 63_A
+	  o 62_A
+	    o 61_A
+	      o 60_A
+	  o 59_A
 	* 58_B
-	* 58_A
+	o 58_A
 	EOF
 '
 
 test_expect_success '--no-graph-indent disables indentation' '
 	lib_test_check_graph --no-graph-indent _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 <<-\EOF
-	* 67_A
-	* 66_A
-	* 65_A
-	* 64_A
-	* 63_A
-	* 62_A
-	* 61_A
-	* 60_A
-	* 59_A
+	o 67_A
+	o 66_A
+	o 65_A
+	o 64_A
+	o 63_A
+	o 62_A
+	o 61_A
+	o 60_A
+	o 59_A
 	* 58_B
-	* 58_A
+	o 58_A
 	EOF
 '
 
 test_expect_success 'log.graphIndent config disables indentation' '
 	test_config log.graphIndent false &&
 	lib_test_check_graph _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 <<-\EOF
-	* 67_A
-	* 66_A
-	* 65_A
-	* 64_A
-	* 63_A
-	* 62_A
-	* 61_A
-	* 60_A
-	* 59_A
+	o 67_A
+	o 66_A
+	o 65_A
+	o 64_A
+	o 63_A
+	o 62_A
+	o 61_A
+	o 60_A
+	o 59_A
 	* 58_B
-	* 58_A
+	o 58_A
 	EOF
 '
 
 test_expect_success '--graph-indent forces indentation when graph.indent is unset' '
 	test_config log.graphIndent false &&
 	lib_test_check_graph --graph-indent _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 <<-\EOF
-	* 67_A
-	  * 66_A
-	    * 65_A
-	      * 64_A
-	* 63_A
-	  * 62_A
-	    * 61_A
-	      * 60_A
-	  * 59_A
+	o 67_A
+	  o 66_A
+	    o 65_A
+	      o 64_A
+	o 63_A
+	  o 62_A
+	    o 61_A
+	      o 60_A
+	  o 59_A
 	* 58_B
-	* 58_A
+	o 58_A
 	EOF
 '
 

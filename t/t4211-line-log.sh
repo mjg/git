@@ -478,7 +478,7 @@ test_expect_success 'show line-log with graph' '
 	| -    return F2;
 	| +    return F2 + 2;
 	|  }
-	* $root_oid Add func1() and func2() in file.c
+	o $root_oid Add func1() and func2() in file.c
 	  diff --git a/file.c b/file.c
 	  new file mode 100644
 	  index $null_blob..$root_blob
