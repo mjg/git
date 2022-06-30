@@ -97,7 +97,7 @@ test_expect_success 'create completely different structure' '
 	|/|
 	| * B
 	|/
-	* A
+	o A
 	EOF
 
 	head="$(git show-ref --verify -s --abbrev HEAD)" &&
@@ -419,8 +419,8 @@ test_expect_success 'root commits' '
 	test_cmp_graph HEAD <<-\EOF &&
 	*   Merge the 3rd root
 	|\
-	| * third-root
-	* second-root
+	| o third-root
+	o second-root
 	EOF
 
 	: fast forward if possible &&
@@ -455,7 +455,7 @@ test_expect_success 'A root commit can be a cousin, treat it that way' '
 	test_cmp_graph HEAD^.. <<-\EOF &&
 	*   Merge branch '\''khnum'\'' into asherah
 	|\
-	| * yama
+	| o yama
 	^ shamkat
 	EOF
 	test_tick &&
@@ -596,7 +596,7 @@ test_expect_success '--rebase-merges with message matched with onto label' '
 	|/|
 	* | C
 	|/
-	* A
+	o A
 	EOF
 '
 
