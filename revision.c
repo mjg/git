@@ -4319,7 +4319,7 @@ const char *get_revision_mark(const struct rev_info *revs, const struct commit *
 	if (commit->object.flags & BOUNDARY)
 		return "-";
 	else if (commit->object.flags & UNINTERESTING)
-		return "^";
+		return "U";
 	else if (commit->object.flags & PATCHSAME)
 		return "=";
 	else if (!revs || revs->left_right) {
