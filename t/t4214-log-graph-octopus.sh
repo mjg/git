@@ -48,7 +48,7 @@ test_expect_success 'log --graph with tricky octopus merge, no color' '
 	| |/
 	* / 1
 	|/
-	* initial
+	o initial
 	EOF
 '
 
@@ -65,7 +65,7 @@ test_expect_success 'log --graph with tricky octopus merge with colors' '
 	<RED>|<RESET> <MAGENTA>|<RESET><MAGENTA>/<RESET>
 	* <MAGENTA>/<RESET> 1
 	<MAGENTA>|<RESET><MAGENTA>/<RESET>
-	* initial
+	o initial
 	EOF
 	test_cmp_colored_graph left octopus-merge
 '
@@ -84,7 +84,7 @@ test_expect_success 'log --graph with normal octopus merge, no color' '
 	| |/
 	* / 1
 	|/
-	* initial
+	o initial
 	EOF
 '
 
@@ -99,7 +99,7 @@ test_expect_success 'log --graph with normal octopus merge with colors' '
 	<RED>|<RESET> <BLUE>|<RESET><BLUE>/<RESET>
 	* <BLUE>/<RESET> 1
 	<BLUE>|<RESET><BLUE>/<RESET>
-	* initial
+	o initial
 	EOF
 	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
 	test_cmp_colored_graph octopus-merge
@@ -117,7 +117,7 @@ test_expect_success 'log --graph with normal octopus merge and child, no color' 
 	| |/
 	* / 1
 	|/
-	* initial
+	o initial
 	EOF
 '
 
@@ -133,7 +133,7 @@ test_expect_success 'log --graph with normal octopus and child merge with colors
 	<GREEN>|<RESET> <MAGENTA>|<RESET><MAGENTA>/<RESET>
 	* <MAGENTA>/<RESET> 1
 	<MAGENTA>|<RESET><MAGENTA>/<RESET>
-	* initial
+	o initial
 	EOF
 	test_config log.graphColors red,green,yellow,blue,magenta,cyan &&
 	test_cmp_colored_graph after-merge
@@ -152,7 +152,7 @@ test_expect_success 'log --graph with tricky octopus merge and its child, no col
 	| |/
 	* / 1
 	|/
-	* initial
+	o initial
 	EOF
 '
 
@@ -170,7 +170,7 @@ test_expect_success 'log --graph with tricky octopus merge and its child with co
 	<RED>|<RESET> <CYAN>|<RESET><CYAN>/<RESET>
 	* <CYAN>/<RESET> 1
 	<CYAN>|<RESET><CYAN>/<RESET>
-	* initial
+	o initial
 	EOF
 	test_cmp_colored_graph left after-merge
 '
@@ -191,7 +191,7 @@ test_expect_success 'log --graph with crossover in octopus merge, no color' '
 	|/|
 	| * 1
 	|/
-	* initial
+	o initial
 	EOF
 '
 
@@ -212,7 +212,7 @@ test_expect_success 'log --graph with crossover in octopus merge with colors' '
 	<MAGENTA>|<RESET><MAGENTA>/<RESET><GREEN>|<RESET>
 	<MAGENTA>|<RESET> * 1
 	<MAGENTA>|<RESET><MAGENTA>/<RESET>
-	* initial
+	o initial
 	EOF
 	test_cmp_colored_graph after-4 octopus-merge
 '
@@ -234,7 +234,7 @@ test_expect_success 'log --graph with crossover in octopus merge and its child, 
 	|/|
 	| * 1
 	|/
-	* initial
+	o initial
 	EOF
 '
 
@@ -256,7 +256,7 @@ test_expect_success 'log --graph with crossover in octopus merge and its child w
 	<CYAN>|<RESET><CYAN>/<RESET><YELLOW>|<RESET>
 	<CYAN>|<RESET> * 1
 	<CYAN>|<RESET><CYAN>/<RESET>
-	* initial
+	o initial
 	EOF
 	test_cmp_colored_graph after-4 after-merge
 '
@@ -277,7 +277,7 @@ test_expect_success 'log --graph with unrelated commit and octopus tip, no color
 	|/|
 	| * 1
 	|/
-	* initial
+	o initial
 	EOF
 '
 
@@ -298,7 +298,7 @@ test_expect_success 'log --graph with unrelated commit and octopus tip with colo
 	<RED>|<RESET><RED>/<RESET><GREEN>|<RESET>
 	<RED>|<RESET> * 1
 	<RED>|<RESET><RED>/<RESET>
-	* initial
+	o initial
 	EOF
 	test_cmp_colored_graph after-initial octopus-merge
 '
@@ -320,7 +320,7 @@ test_expect_success 'log --graph with unrelated commit and octopus child, no col
 	|/|
 	| * 1
 	|/
-	* initial
+	o initial
 	EOF
 '
 
@@ -342,7 +342,7 @@ test_expect_success 'log --graph with unrelated commit and octopus child with co
 	<RED>|<RESET><RED>/<RESET><YELLOW>|<RESET>
 	<RED>|<RESET> * 1
 	<RED>|<RESET><RED>/<RESET>
-	* initial
+	o initial
 	EOF
 	test_cmp_colored_graph after-initial after-merge
 '
