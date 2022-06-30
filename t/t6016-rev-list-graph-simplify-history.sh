@@ -233,13 +233,13 @@ test_expect_success '--graph --boundary ^C3' '
 	| * | | B2
 	| * | | B1
 	* | | | A3
-	o | | | A2
+	^ | | | A2
 	|/ / /
-	o / / A1
+	^ / / A1
 	 / /
-	| o C3
+	| ^ C3
 	|/
-	o C2
+	^ C2
 	EOF
 '
 
