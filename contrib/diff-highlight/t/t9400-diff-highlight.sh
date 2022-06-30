@@ -102,9 +102,9 @@ left_trim () {
 }
 
 trim_graph () {
-	# graphs start with * or |
+	# graphs start with * or | or o
 	# followed by a space or / or \
-	"$PERL_PATH" -pe 's@^((\*|\|)( |/|\\))+@@'
+	"$PERL_PATH" -pe 's@^((\*|\||o)( |/|\\))+@@'
 }
 
 test_expect_success 'diff-highlight highlights the beginning of a line' '
