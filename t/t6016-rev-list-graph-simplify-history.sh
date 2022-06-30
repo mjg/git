@@ -75,7 +75,7 @@ test_expect_success '--graph --all' '
 	|/|
 	* | A2
 	|/
-	* A1
+	o A1
 	EOF
 '
 
@@ -103,7 +103,7 @@ test_expect_success '--graph --simplify-by-decoration' '
 	|/|
 	* | A2
 	|/
-	* A1
+	o A1
 	EOF
 '
 
@@ -129,7 +129,7 @@ test_expect_success '--graph --simplify-by-decoration prune branch B' '
 	* | A3
 	|/
 	* A2
-	* A1
+	o A1
 	EOF
 '
 
@@ -144,7 +144,7 @@ test_expect_success '--graph --full-history -- bar.txt' '
 	|\|
 	* | A3
 	|/
-	* A2
+	o A2
 	EOF
 '
 
@@ -157,7 +157,7 @@ test_expect_success '--graph --full-history --simplify-merges -- bar.txt' '
 	* | A5
 	* | A3
 	|/
-	* A2
+	o A2
 	EOF
 '
 
@@ -168,7 +168,7 @@ test_expect_success '--graph -- bar.txt' '
 	* A3
 	| * C4
 	|/
-	* A2
+	o A2
 	EOF
 '
 
@@ -185,7 +185,7 @@ test_expect_success '--graph --sparse -- bar.txt' '
 	| * C1
 	|/
 	* A2
-	* A1
+	o A1
 	EOF
 '
 
