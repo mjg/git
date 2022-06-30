@@ -260,7 +260,7 @@ test_expect_success 'with a branch tip that was cherry-picked already' '
 	| * A1
 	* | B1
 	|/
-	o A2
+	^ A2
 	EOF
 '
 
@@ -270,7 +270,7 @@ test_expect_success '--no-rebase-merges countermands --rebase-merges' '
 	test_cmp_graph C.. <<-\EOF
 	* B
 	* D
-	o C
+	^ C
 	EOF
 '
 
@@ -288,7 +288,7 @@ test_expect_success 'do not rebase cousins unless asked for' '
 	| * D
 	| * G
 	|/
-	o H
+	^ H
 	EOF
 '
 
@@ -302,7 +302,7 @@ test_expect_success 'rebase.rebaseMerges=rebase-cousins is equivalent to --rebas
 	| * D
 	| * G
 	|/
-	o H
+	^ H
 	EOF
 '
 
@@ -313,7 +313,7 @@ test_expect_success '--no-rebase-merges overrides rebase.rebaseMerges=no-rebase-
 	test_cmp_graph C.. <<-\EOF
 	* B
 	* D
-	o C
+	^ C
 	EOF
 '
 
@@ -447,7 +447,7 @@ test_expect_success 'A root commit can be a cousin, treat it that way' '
 	*   Merge branch '\''khnum'\'' into asherah
 	|\
 	| * yama
-	o shamkat
+	^ shamkat
 	EOF
 	test_tick &&
 	git rebase --rebase-merges=rebase-cousins HEAD^ &&
@@ -456,7 +456,7 @@ test_expect_success 'A root commit can be a cousin, treat it that way' '
 	|\
 	| * yama
 	|/
-	o shamkat
+	^ shamkat
 	EOF
 '
 
@@ -506,7 +506,7 @@ test_expect_success 'octopus merges' '
 	| |/
 	* / one
 	|/
-	o before-octopus
+	^ before-octopus
 	EOF
 '
 
