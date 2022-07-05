@@ -20,7 +20,7 @@ Date:   Mon Jun 26 00:06:00 2006 +0000
 
     Rearranged lines in dir/sub
 
-commit cbacedd14cb8b89255a2c02b59e77a2e9a8021a0 (refs/notes/commits)
+commit o cbacedd14cb8b89255a2c02b59e77a2e9a8021a0 (refs/notes/commits)
 Author: A U Thor <author@example.com>
 Date:   Mon Jun 26 00:06:00 2006 +0000
 
@@ -53,7 +53,7 @@ Date:   Mon Jun 26 00:01:00 2006 +0000
     
     This is the second commit.
 
-commit 444ac553ac7612cc88969031b02b3767fb8a353a (refs/heads/initial)
+commit o 444ac553ac7612cc88969031b02b3767fb8a353a (refs/heads/initial)
 Author: A U Thor <author@example.com>
 Date:   Mon Jun 26 00:00:00 2006 +0000
 

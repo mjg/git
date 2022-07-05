@@ -51,7 +51,7 @@ ${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A1${c_reset}${
  ${c_reset}${c_remoteBranch}other/main${c_reset}${c_commit})${c_reset} A1
 ${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_stash}refs/stash${c_reset}${c_commit})${c_reset}\
  On main: Changes to A.t
-${c_commit}COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
+${c_commit}o COMMIT_ID${c_reset}${c_commit} (${c_reset}${c_tag}tag: A${c_reset}${c_commit})${c_reset} A
 EOF
 
 # We want log to show all, but the second parent to refs/stash is irrelevant

@@ -160,6 +160,7 @@ test_expect_success 'git log -g -p shows diffs vs. parents' '
 	git log -g -p flipflop >reflog &&
 	grep -v ^Reflog reflog >actual &&
 	git log -1 -p HEAD^ >log.one &&
+	sed -i -e "s/commit o/commit/" log.one &&
 	git log -1 -p HEAD >log.two &&
 	(
 		cat log.one && echo &&

@@ -2286,6 +2286,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
 		revs->limited = 1;
 	} else if (!strcmp(arg, "-g") || !strcmp(arg, "--walk-reflogs")) {
 		init_reflog_walk(&revs->reflog_info);
+		revs->root_mark = 0;
 	} else if (!strcmp(arg, "--default")) {
 		if (argc <= 1)
 			return error("bad --default argument");
@@ -4327,7 +4328,7 @@ const char *get_revision_mark(const struct rev_info *revs, const struct commit *
 			return "<";
 		else
 			return ">";
-	} else if (!commit->parents && revs->graph)
+	} else if (!commit->parents && revs->root_mark)
 			return "o";
 	else if (revs->graph)
 		return "*";

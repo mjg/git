@@ -1,5 +1,5 @@
 $ git log --first-parent --diff-merges=off -p master
-commit 80e25ffa65bcdbe82ef654b4d06dbbde7945c37f
+commit 59d314ad6f356dd08601a4cd5e530381da3e3c64
 Merge: 9a6d494 c7a2ab9
 Author: A U Thor <author@example.com>
 Date:   Mon Jun 26 00:04:00 2006 +0000
@@ -70,7 +70,7 @@ index 01e79c3..0000000
 -2
 -3
 
-commit 444ac553ac7612cc88969031b02b3767fb8a353a
+commit o 444ac553ac7612cc88969031b02b3767fb8a353a
 Author: A U Thor <author@example.com>
 Date:   Mon Jun 26 00:00:00 2006 +0000
 

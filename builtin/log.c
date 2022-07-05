@@ -152,6 +152,7 @@ static void cmd_log_init_defaults(struct rev_info *rev)
 	rev->diffopt.stat_graph_width = -1; /* respect statGraphWidth config */
 	rev->abbrev_commit = default_abbrev_commit;
 	rev->show_root_diff = default_show_root;
+	rev->root_mark = 1;
 	rev->subject_prefix = fmt_patch_subject_prefix;
 	rev->patch_name_max = fmt_patch_name_max;
 	rev->show_signature = default_show_signature;
@@ -782,6 +783,7 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
 	rev.commit_format = CMIT_FMT_ONELINE;
 	rev.use_terminator = 1;
 	rev.always_show_header = 1;
+	rev.root_mark = 0;
 	cmd_log_init_finish(argc, argv, prefix, &rev, &opt);
 
 	return cmd_log_deinit(cmd_log_walk(&rev), &rev);

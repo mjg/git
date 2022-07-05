@@ -48,7 +48,7 @@ Date:   Thu Apr 7 15:14:13 2005 -0700
 Notes:
     Note #2
 
-commit $first
+commit o $first
 Author: A U Thor <author@example.com>
 Date:   Thu Apr 7 15:13:13 2005 -0700
 

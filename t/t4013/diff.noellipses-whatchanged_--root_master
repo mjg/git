@@ -30,7 +30,7 @@ Date:   Mon Jun 26 00:01:00 2006 +0000
 :100644 100644 01e79c3 b414108 M	file0
 :100644 000000 01e79c3 0000000 D	file2
 
-commit 444ac553ac7612cc88969031b02b3767fb8a353a
+commit o 444ac553ac7612cc88969031b02b3767fb8a353a
 Author: A U Thor <author@example.com>
 Date:   Mon Jun 26 00:00:00 2006 +0000
 
