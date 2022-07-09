@@ -13,7 +13,7 @@ run_with_limited_processses () {
 	then
 		ulimit_max_process="-u"
 	fi
-	(ulimit ${ulimit_max_process-"-p"} 512 && "$@")
+	(ulimit ${ulimit_max_process-"-p"} 2048 && "$@")
 }
 
 test_lazy_prereq ULIMIT_PROCESSES '
