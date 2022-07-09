@@ -62,14 +62,14 @@ test_expect_success 'alias user-defined format' '
 test_expect_success 'alias user-defined tformat with %s (ISO8859-1 encoding)' '
 	git config i18n.logOutputEncoding $test_encoding &&
 	git log --oneline >expected-s &&
-	git log --pretty="tformat:%h %s" >actual-s &&
+	git log --pretty="tformat:%m %h %s" >actual-s &&
 	git config --unset i18n.logOutputEncoding &&
 	test_cmp expected-s actual-s
 '
 
 test_expect_success 'alias user-defined tformat with %s (utf-8 encoding)' '
 	git log --oneline >expected-s &&
-	git log --pretty="tformat:%h %s" >actual-s &&
+	git log --pretty="tformat:%m %h %s" >actual-s &&
 	test_cmp expected-s actual-s
 '
 
