@@ -273,7 +273,7 @@ General advice:
 
   ```c
   /* TRANSLATORS: %s will be "revert" or "cherry-pick" */
-  die(_("%s: Unable to write new index file"), action_name(opts));
+  die(_("git %s: unable to write new index file"), action_name(opts));
   ```
 
 We provide wrappers for C, Shell and Perl programs. Here's how they're

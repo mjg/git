@@ -539,8 +539,8 @@ static int error_dirty_index(struct repository *repo, struct replay_opts *opts)
 	if (repo_read_index_unmerged(repo))
 		return error_resolve_conflict(action_name(opts));
 
-	error(_("your local changes would be overwritten by %s."),
-		_(action_name(opts)));
+	error(_("git %s: your local changes would be overwritten"),
+		action_name(opts)));
 
 	if (advice_enabled(ADVICE_COMMIT_BEFORE_MERGE))
 		advise(_("commit your changes or stash them to proceed."));
@@ -725,8 +725,8 @@ static int do_recursive_merge(struct repository *r,
 		 * TRANSLATORS: %s will be "revert", "cherry-pick" or
 		 * "rebase".
 		 */
-		return error(_("%s: Unable to write new index file"),
-			_(action_name(opts)));
+		return error(_("git %s: unable to write new index file"),
+			action_name(opts));
 
 	if (!clean)
 		append_conflicts_hint(r->index, msgbuf,
