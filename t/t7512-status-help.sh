@@ -100,7 +100,9 @@ EOF
 UU main.txt
 EOF
 	git status --untracked-files=no --short --branch --in-progress >actual &&
-	test_cmp expected actual
+	test_cmp expected actual &&
+	git status --untracked-files=no --porcelain=v2 --branch >actual &&
+	test_grep "^# branch.inprogress REBASE-m$" actual
 '
 
 
@@ -167,7 +169,9 @@ EOF
 UU main.txt
 EOF
 	git status --untracked-files=no --short --branch --in-progress >actual &&
-	test_cmp expected actual
+	test_cmp expected actual &&
+	git status --untracked-files=no --porcelain=v2 --branch >actual &&
+	test_grep "^# branch.inprogress REBASE-i$" actual
 '
 
 
@@ -637,7 +641,9 @@ EOF
 ## am_already_exists; AM
 EOF
 	git status --untracked-files=no --short --branch --in-progress >actual &&
-	test_cmp expected actual
+	test_cmp expected actual &&
+	git status --untracked-files=no --porcelain=v2 --branch >actual &&
+	test_grep "^# branch.inprogress AM$" actual
 '
 
 
@@ -711,7 +717,9 @@ EOF
 ## HEAD (no branch); BISECTING
 EOF
 	git status --untracked-files=no --short --branch --in-progress >actual &&
-	test_cmp expected actual
+	test_cmp expected actual &&
+	git status --untracked-files=no --porcelain=v2 --branch >actual &&
+	test_grep "^# branch.inprogress BISECTING$" actual
 '
 
 
@@ -804,7 +812,9 @@ EOF
 UU main.txt
 EOF
 	git status --untracked-files=no --short --branch --in-progress >actual &&
-	test_cmp expected actual
+	test_cmp expected actual &&
+	git status --untracked-files=no --porcelain=v2 --branch >actual &&
+	test_grep "^# branch.inprogress CHERRY-PICKING$" actual
 '
 
 
@@ -938,7 +948,9 @@ EOF
 UU to-revert.txt
 EOF
 	git status --untracked-files=no --short --branch --in-progress >actual &&
-	test_cmp expected actual
+	test_cmp expected actual &&
+	git status --untracked-files=no --porcelain=v2 --branch >actual &&
+	test_grep "^# branch.inprogress REVERTING$" actual
 '
 
 
