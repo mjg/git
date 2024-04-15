@@ -295,6 +295,7 @@ test_expect_success 'verify AA (add-add) conflict' '
 	cat >expect <<-EOF &&
 	# branch.oid $HM
 	# branch.head AA_M
+	# branch.inprogress MERGING
 	u AA N... 000000 100644 100644 100644 $ZERO_OID $OID_AA_B $OID_AA_A conflict.txt
 	EOF
 
@@ -335,6 +336,7 @@ test_expect_success 'verify UU (edit-edit) conflict' '
 	cat >expect <<-EOF &&
 	# branch.oid $HM
 	# branch.head UU_M
+	# branch.inprogress MERGING
 	u UU N... 100644 100644 100644 100644 $OID_UU_ANC $OID_UU_B $OID_UU_A conflict.txt
 	EOF
 
