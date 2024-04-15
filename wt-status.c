@@ -2302,6 +2302,20 @@ static void wt_porcelain_v2_print_tracking(struct wt_status *s)
 			}
 		}
 	}
+	if (s->state.merge_in_progress)
+		fprintf(s->fp, "# branch.inprogress %s%c", "MERGING", eol);
+	if (s->state.am_in_progress)
+		fprintf(s->fp, "# branch.inprogress %s%c", "AM", eol);
+	if (s->state.rebase_in_progress)
+		fprintf(s->fp, "# branch.inprogress %s%c", "REBASE-m", eol);
+	if (s->state.rebase_interactive_in_progress)
+		fprintf(s->fp, "# branch.inprogress %s%c", "REBASE-i", eol);
+	if (s->state.cherry_pick_in_progress)
+		fprintf(s->fp, "# branch.inprogress %s%c", "CHERRY-PICKING", eol);
+	if (s->state.revert_in_progress)
+		fprintf(s->fp, "# branch.inprogress %s%c", "REVERTING", eol);
+	if (s->state.bisect_in_progress)
+		fprintf(s->fp, "# branch.inprogress %s%c", "BISECTING", eol);
 }
 
 /*
