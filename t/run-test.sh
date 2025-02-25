@@ -13,6 +13,7 @@ case "$1" in
 	exec "${TEST_SHELL_PATH}" "$@" ${TEST_OPTIONS}
 	;;
 *)
+	. ./unittest-lib.sh
 	exec "$@"
 	;;
 esac
