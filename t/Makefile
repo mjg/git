@@ -79,7 +79,7 @@ prove: pre-clean $(TEST_LINT)
 	$(MAKE) clean-except-prove-cache
 
 $(T):
-	@echo "*** $@ ***"; '$(TEST_SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
+	@echo "*** $@ ***"; '$(TEST_SHELL_PATH_SQ)' ./run-test.sh $@ $(GIT_TEST_OPTS)
 
 $(UNIT_TESTS):
 	@echo "*** $@ ***"; $@
