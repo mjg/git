@@ -1379,7 +1379,7 @@ static enum ref_transaction_error write_with_updates(struct packed_ref_store *re
 	packed_refs_path = get_locked_file_path(&refs->lock);
 	strbuf_addf(&sb, "%s.new", packed_refs_path);
 	free(packed_refs_path);
-	refs->tempfile = create_tempfile(sb.buf);
+	refs->tempfile = repo_create_tempfile(refs->base.repo, sb.buf);
 	if (!refs->tempfile) {
 		strbuf_addf(err, "unable to create file %s: %s",
 			    sb.buf, strerror(errno));
