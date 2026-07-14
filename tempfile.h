@@ -94,15 +94,8 @@ struct tempfile {
  * `core.sharedRepository`, so it is not guaranteed to have the given
  * mode.
  */
-struct tempfile *create_tempfile_mode(const char *path, int mode);
-
 struct tempfile *repo_create_tempfile_mode(struct repository *r,
 					   const char *path, int mode);
-
-static inline struct tempfile *create_tempfile(const char *path)
-{
-	return create_tempfile_mode(path, 0666);
-}
 
 static inline struct tempfile *repo_create_tempfile(struct repository *r,
 						    const char *path)

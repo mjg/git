@@ -42,8 +42,6 @@
  * file created by its parent.
  */
 
-#define USE_THE_REPOSITORY_VARIABLE
-
 #include "git-compat-util.h"
 #include "abspath.h"
 #include "path.h"
@@ -134,11 +132,6 @@ static void deactivate_tempfile(struct tempfile *tempfile)
 }
 
 /* Make sure errno contains a meaningful value on error */
-struct tempfile *create_tempfile_mode(const char *path, int mode)
-{
-	return repo_create_tempfile_mode(the_repository, path, mode);
-}
-
 struct tempfile *repo_create_tempfile_mode(struct repository *r,
 					   const char *path, int mode)
 {
