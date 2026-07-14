@@ -417,13 +417,11 @@ void graph_setup_line_prefix(struct diff_options *diffopt)
 		diffopt->output_prefix = diff_output_prefix_callback;
 }
 
-struct git_graph *graph_init(struct rev_info *opt)
+static void graph_read_config(struct rev_info *revs)
 {
-	struct git_graph *graph = xmalloc(sizeof(struct git_graph));
-
 	if (!column_colors) {
 		char *string;
-		if (repo_config_get_string(opt->repo, "log.graphcolors", &string)) {
+		if (repo_config_get_string(revs->repo, "log.graphcolors", &string)) {
 			/* not configured -- use default */
 			graph_set_column_colors(column_colors_ansi,
 						column_colors_ansi_max);
@@ -437,6 +435,13 @@ struct git_graph *graph_init(struct rev_info *opt)
 						custom_colors.nr - 1);
 		}
 	}
+}
+
+struct git_graph *graph_init(struct rev_info *opt)
+{
+	struct git_graph *graph = xmalloc(sizeof(struct git_graph));
+
+	graph_read_config(opt);
 
 	graph->commit = NULL;
 	graph->revs = opt;
