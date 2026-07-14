@@ -266,9 +266,9 @@ static int disconnect_helper(struct transport *transport)
 		close(data->helper->out);
 		fclose(data->out);
 		res = finish_command(data->helper);
+		FREE_AND_NULL(data->name);
 		FREE_AND_NULL(data->helper);
 	}
-	FREE_AND_NULL(data->name);
 	return res;
 }
 
@@ -727,7 +727,8 @@ static int fetch_refs(struct transport *transport,
 
 	/*
 	 * If we reach here, then the server, the client, and/or the transport
-	 * helper does not support protocol v2. --negotiate-only.
+	 * helper does not support protocol v2. --negotiate-only requires
+	 * protocol v2.
 	 */
 	if (data->transport_options.acked_commits) {
 		warning(_("--negotiate-only requires protocol v2"));
@@ -781,15 +782,6 @@ static int fetch_refs(struct transport *transport,
 		return fetch_with_import(transport, nr_heads, to_fetch);
 
 	return -1;
-}
-
-static int fetch_object_info_helper(struct transport *transport)
-{
-	get_helper(transport);
-	if (process_connect(transport, 0))
-		return transport->vtable->fetch_object_info(transport);
-
-	die(_("object-info requires protocol v2"));
 }
 
 struct push_update_ref_state {
@@ -1338,7 +1330,6 @@ static struct transport_vtable vtable = {
 	.get_refs_list	= get_refs_list,
 	.get_bundle_uri = get_bundle_uri,
 	.fetch_refs	= fetch_refs,
-	.fetch_object_info = fetch_object_info_helper,
 	.push_refs	= push_refs,
 	.connect	= connect_helper,
 	.disconnect	= release_helper
