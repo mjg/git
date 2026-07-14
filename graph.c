@@ -1042,6 +1042,23 @@ void graph_update(struct git_graph *graph, struct commit *commit)
 		 */
 		if (!graph->visual_root_depth && flags.is_next_visual_root)
 			graph->visual_root_cascade = 1;
+
+		/*
+		 * We wrap the cascading at a max of four columns at most, after
+		 * that we wrap it back to the initial column.
+		 *
+		 * This could cause ambiguity in case of the next commit not
+		 * being a visual root and be at the initial column after the
+		 * first wrap.
+		 *
+		 * In case of being a non-visual-root the next, stop the
+		 * cascading to get the commit indented.
+		 */
+		if (!flags.is_next_visual_root &&
+		    graph->visual_root_depth &&
+		    !(graph->visual_root_depth % 4))
+			graph->visual_root_cascade = 0;
+
 		graph->visual_root_depth++;
 	} else {
 		graph->visual_root_depth = 0;
@@ -1328,8 +1345,11 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line 
 				 * Each visual column is 2 characters wide.
 				 * Omit the indentation for the first visual
 				 * root in cascade mode.
+				 *
+				 * Have a max of 4 columns when cascading, after
+				 * that wrap it and repeat.
 				 */
-				int padding = (depth - graph->visual_root_cascade) * 2;
+				int padding = ((depth - graph->visual_root_cascade) % 4) * 2;
 				graph_line_addchars(line, ' ', padding);
 				graph->width += padding;
 			}

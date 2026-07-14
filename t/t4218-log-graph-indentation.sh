@@ -511,4 +511,33 @@ test_expect_success '--grep skipped parent makes a visual root' '
 	EOF
 '
 
+# The cascading wraps after 4 columns and when wraping (column % 4 == 0) if the
+# next is a non visual-root, force indentation to avoid an ambiguous graph
+# (commit 59_A is forcefully indented)
+test_expect_success 'visual root cascading gets wrapped after 4 columns' '
+	create_orphan _58 && test_commit 58_A && test_commit 58_B &&
+	create_orphan _59 && test_commit 59_A &&
+	create_orphan _60 && test_commit 60_A &&
+	create_orphan _61 && test_commit 61_A &&
+	create_orphan _62 && test_commit 62_A &&
+	create_orphan _63 && test_commit 63_A &&
+	create_orphan _64 && test_commit 64_A &&
+	create_orphan _65 && test_commit 65_A &&
+	create_orphan _66 && test_commit 66_A &&
+	create_orphan _67 && test_commit 67_A &&
+	lib_test_check_graph _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 <<-\EOF
+	* 67_A
+	  * 66_A
+	    * 65_A
+	      * 64_A
+	* 63_A
+	  * 62_A
+	    * 61_A
+	      * 60_A
+	  * 59_A
+	* 58_B
+	* 58_A
+	EOF
+'
+
 test_done
