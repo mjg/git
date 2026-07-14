@@ -1232,10 +1232,9 @@ int packed_refs_lock(struct ref_store *ref_store, int flags, struct strbuf *err)
 	 * don't write new content to it, but rather to a separate
 	 * tempfile.
 	 */
-	if (hold_lock_file_for_update_timeout(
-			    &refs->lock,
-			    refs->path,
-			    flags, timeout_value) < 0) {
+	if (repo_hold_lock_file_for_update_timeout(ref_store->repo, &refs->lock,
+						   refs->path, flags,
+						   timeout_value) < 0) {
 		unable_to_lock_message(refs->path, errno, err);
 		return -1;
 	}
