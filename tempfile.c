@@ -136,6 +136,12 @@ static void deactivate_tempfile(struct tempfile *tempfile)
 /* Make sure errno contains a meaningful value on error */
 struct tempfile *create_tempfile_mode(const char *path, int mode)
 {
+	return repo_create_tempfile_mode(the_repository, path, mode);
+}
+
+struct tempfile *repo_create_tempfile_mode(struct repository *r,
+					   const char *path, int mode)
+{
 	struct tempfile *tempfile = new_tempfile();
 
 	strbuf_add_absolute_path(&tempfile->filename, path);
@@ -150,7 +156,7 @@ struct tempfile *create_tempfile_mode(const char *path, int mode)
 		return NULL;
 	}
 	activate_tempfile(tempfile);
-	if (adjust_shared_perm(the_repository, tempfile->filename.buf)) {
+	if (adjust_shared_perm(r, tempfile->filename.buf)) {
 		int save_errno = errno;
 		error("cannot fix permission bits on %s", tempfile->filename.buf);
 		delete_tempfile(&tempfile);

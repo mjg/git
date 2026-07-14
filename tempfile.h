@@ -4,6 +4,8 @@
 #include "list.h"
 #include "strbuf.h"
 
+struct repository;
+
 /*
  * Handle temporary files.
  *
@@ -94,9 +96,18 @@ struct tempfile {
  */
 struct tempfile *create_tempfile_mode(const char *path, int mode);
 
+struct tempfile *repo_create_tempfile_mode(struct repository *r,
+					   const char *path, int mode);
+
 static inline struct tempfile *create_tempfile(const char *path)
 {
 	return create_tempfile_mode(path, 0666);
+}
+
+static inline struct tempfile *repo_create_tempfile(struct repository *r,
+						    const char *path)
+{
+	return repo_create_tempfile_mode(r, path, 0666);
 }
 
 /*
