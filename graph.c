@@ -419,6 +419,8 @@ void graph_setup_line_prefix(struct diff_options *diffopt)
 
 static void graph_read_config(struct rev_info *revs)
 {
+	int val;
+
 	if (!column_colors) {
 		char *string;
 		if (repo_config_get_string(revs->repo, "log.graphcolors", &string)) {
@@ -435,6 +437,9 @@ static void graph_read_config(struct rev_info *revs)
 						custom_colors.nr - 1);
 		}
 	}
+
+	if (!repo_config_get_bool(revs->repo, "log.graphIndent", &val))
+		revs->no_graph_indent = !val;
 }
 
 struct git_graph *graph_init(struct rev_info *opt)
@@ -999,7 +1004,8 @@ static void graph_peek_next_visible(struct git_graph *graph,
 static int graph_needs_pre_root_line(struct git_graph *graph)
 {
 	return graph->commit_in_columns && graph->is_visual_root &&
-	       graph->num_columns > 0 && !graph->visual_root_cascade;
+	       graph->num_columns > 0 && !graph->visual_root_cascade &&
+	       !graph->revs->no_graph_indent;
 }
 
 void graph_update(struct git_graph *graph, struct commit *commit)
@@ -1344,7 +1350,7 @@ static void graph_output_commit_line(struct git_graph *graph, struct graph_line 
 
 		if (col_commit == graph->commit) {
 			seen_this = 1;
-			if (graph->is_visual_root) {
+			if (graph->is_visual_root && !graph->revs->no_graph_indent) {
 				int depth = graph->visual_root_depth;
 				/*
 				 * Each visual column is 2 characters wide.

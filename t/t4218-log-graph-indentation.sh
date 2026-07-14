@@ -540,4 +540,57 @@ test_expect_success 'visual root cascading gets wrapped after 4 columns' '
 	EOF
 '
 
+test_expect_success '--no-graph-indent disables indentation' '
+	lib_test_check_graph --no-graph-indent _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 <<-\EOF
+	* 67_A
+	* 66_A
+	* 65_A
+	* 64_A
+	* 63_A
+	* 62_A
+	* 61_A
+	* 60_A
+	* 59_A
+	* 58_B
+	* 58_A
+	EOF
+'
+
+test_expect_success 'log.graphIndent config disables indentation' '
+	test_config log.graphIndent false &&
+	lib_test_check_graph _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 <<-\EOF
+	* 67_A
+	* 66_A
+	* 65_A
+	* 64_A
+	* 63_A
+	* 62_A
+	* 61_A
+	* 60_A
+	* 59_A
+	* 58_B
+	* 58_A
+	EOF
+'
+
+test_expect_success '--graph-indent forces indentation when graph.indent is unset' '
+	test_config log.graphIndent false &&
+	lib_test_check_graph --graph-indent _58 _59 _60 _61 _62 _63 _64 _65 _66 _67 <<-\EOF
+	* 67_A
+	  * 66_A
+	    * 65_A
+	      * 64_A
+	* 63_A
+	  * 62_A
+	    * 61_A
+	      * 60_A
+	  * 59_A
+	* 58_B
+	* 58_A
+	EOF
+'
+
+# log.graphIndent unset and no --option (which activates graph indentation) is
+# the default state.
+
 test_done
