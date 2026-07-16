@@ -1,6 +1,7 @@
 #ifndef REFSPEC_H
 #define REFSPEC_H
 
+struct git_hash_algo;
 struct string_list;
 struct strvec;
 
@@ -33,8 +34,10 @@ struct refspec_item {
 	char *raw;
 };
 
-int refspec_item_init_fetch(struct refspec_item *item, const char *refspec);
-int refspec_item_init_push(struct refspec_item *item, const char *refspec);
+int refspec_item_init_fetch(struct refspec_item *item, const char *refspec,
+			    const struct git_hash_algo *algo);
+int refspec_item_init_push(struct refspec_item *item, const char *refspec,
+			   const struct git_hash_algo *algo);
 void refspec_item_clear(struct refspec_item *item);
 
 /**
@@ -61,7 +64,7 @@ __attribute__((format (printf,2,3)))
 void refspec_appendf(struct refspec *rs, const char *fmt, ...);
 void refspec_appendn(struct refspec *rs, const char **refspecs, int nr);
 
-int valid_fetch_refspec(const char *refspec);
+int valid_fetch_refspec(const char *refspec, const struct git_hash_algo *algo);
 
 /*
  * Determine what <prefix> values to pass to the peer in ref-prefix lines

@@ -3039,7 +3039,7 @@ int valid_remote_name(const char *name)
 	int result;
 	struct strbuf refspec = STRBUF_INIT;
 	strbuf_addf(&refspec, "refs/heads/test:refs/remotes/%s/test", name);
-	result = valid_fetch_refspec(refspec.buf);
+	result = valid_fetch_refspec(refspec.buf, the_hash_algo);
 	strbuf_release(&refspec);
 	return result;
 }
