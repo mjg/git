@@ -1,4 +1,3 @@
-#define USE_THE_REPOSITORY_VARIABLE
 #define DISABLE_SIGN_COMPARE_WARNINGS
 
 #include "git-compat-util.h"
@@ -185,15 +184,15 @@ void refspec_item_clear(struct refspec_item *item)
 	item->exact_sha1 = 0;
 }
 
-void refspec_init_fetch(struct refspec *rs)
+void refspec_init_fetch(struct refspec *rs, const struct git_hash_algo *algo)
 {
-	struct refspec blank = REFSPEC_INIT_FETCH;
+	struct refspec blank = REFSPEC_INIT_FETCH(algo);
 	memcpy(rs, &blank, sizeof(*rs));
 }
 
-void refspec_init_push(struct refspec *rs)
+void refspec_init_push(struct refspec *rs, const struct git_hash_algo *algo)
 {
-	struct refspec blank = REFSPEC_INIT_PUSH;
+	struct refspec blank = REFSPEC_INIT_PUSH(algo);
 	memcpy(rs, &blank, sizeof(*rs));
 }
 
@@ -203,9 +202,9 @@ void refspec_append(struct refspec *rs, const char *refspec)
 	int ret;
 
 	if (rs->fetch)
-		ret = refspec_item_init_fetch(&item, refspec, the_hash_algo);
+		ret = refspec_item_init_fetch(&item, refspec, rs->hash_algo);
 	else
-		ret = refspec_item_init_push(&item, refspec, the_hash_algo);
+		ret = refspec_item_init_push(&item, refspec, rs->hash_algo);
 	if (!ret)
 		die(_("invalid refspec '%s'"), refspec);
 

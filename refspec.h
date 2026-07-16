@@ -49,14 +49,21 @@ struct refspec {
 	int alloc;
 	int nr;
 
+	const struct git_hash_algo *hash_algo;
 	unsigned fetch : 1;
 };
 
-#define REFSPEC_INIT_FETCH { .fetch = 1 }
-#define REFSPEC_INIT_PUSH { .fetch = 0 }
+#define REFSPEC_INIT_FETCH(algo) { \
+	.fetch = 1, \
+	.hash_algo = (algo), \
+}
+#define REFSPEC_INIT_PUSH(algo) { \
+	.fetch = 0, \
+	.hash_algo = (algo), \
+}
 
-void refspec_init_fetch(struct refspec *rs);
-void refspec_init_push(struct refspec *rs);
+void refspec_init_fetch(struct refspec *rs, const struct git_hash_algo *hash_algo);
+void refspec_init_push(struct refspec *rs, const struct git_hash_algo *hash_algo);
 void refspec_clear(struct refspec *rs);
 
 void refspec_append(struct refspec *rs, const char *refspec);
