@@ -181,7 +181,10 @@ impl CryptoDigest for CryptoHasher {
 impl Clone for CryptoHasher {
     fn clone(&self) -> Self {
         let ctx = unsafe { c::git_hash_alloc() };
-        unsafe { c::git_hash_clone(ctx, self.ctx) };
+        unsafe {
+            c::git_hash_init(ctx, self.algo.hash_algo_ptr());
+            c::git_hash_clone(ctx, self.ctx)
+        };
         Self {
             algo: self.algo,
             ctx,
